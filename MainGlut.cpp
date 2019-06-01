@@ -1,9 +1,8 @@
-#include <iostream>
 #include "MiMundo.h"
-#include "Gestor.h"
-#include "ETSIDI.h"
+#include <iostream>
+#include "glut.h"
 
-Gestor gestor;
+Mundo mundo;
 
 //VARIABLES GLOBALES
 const int GV::N_Disparos = 10;
@@ -12,6 +11,9 @@ const float GV::V_Nave = 20.0;
 const float GV::Distancia = 82.5;
 const float GV::R_Generacion = 55.0;
 const float GV::R_Destruccion = 65.0;
+const int GV::HP_Inicial = 3;
+const int GV::HP_Nave_Enemiga = 5;
+const float GV::T_Disparo_NaveEnemiga = 0.7;
 
 //los callback, funciones que seran llamadas automaticamente por la glut
 //cuando sucedan eventos
@@ -23,7 +25,7 @@ void OnSpecialKeyboardDown(int key, int x, int y); //al pulsar una tecla especia
 void OnMouseClick(int button, int state, int x, int y); //al pulsar el ratón
 void OnMouseMove(int x, int y); //al mover el ratón
 void OnRelease(unsigned char key, int x, int y); //cuando se suelta la tecla
-void OnIdle(); //al no hacer nada (debe hacerse cuando se mantienen varias teclas pulsadas (???)
+void OnIdle(); //al no hacer nada (debe hacerse cuando se mantienen varias teclas pulsadas (???))
 
 
 int main(int argc, char* argv[]) {
@@ -33,7 +35,7 @@ int main(int argc, char* argv[]) {
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 600);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutCreateWindow("SPACE DESTROYERS");
+	glutCreateWindow("MiJuego");
 
 	//habilitar luces y definir perspectiva
 	glEnable(GL_LIGHT0);
@@ -58,7 +60,7 @@ int main(int argc, char* argv[]) {
 	glutIdleFunc(OnIdle);//cuando no se hace nada
 
 
-	gestor.Inicializa();
+	mundo.Inicializa();
 
 	//pasarle el control a GLUT,que llamara a los callbacks
 	glutMainLoop();
@@ -96,8 +98,8 @@ void OnDraw(void)
 	glutSolidIcosahedron();
 	*/
 
-	gestor.Dibuja();
-	
+	mundo.Dibuja();
+
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
 }
@@ -106,11 +108,10 @@ void OnDraw(void)
 
 void OnTimer(int value)
 {
-	static float aux=0;
 	//poner aqui el código de animacion
-	gestor.Mueve(0.025);
-	gestor.Tecla();
-	gestor.Interacciones();
+	mundo.Mueve(0.025);
+	mundo.Tecla();
+	mundo.Interacciones();
 
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);
@@ -122,12 +123,12 @@ void OnSpecialKeyboardDown(int key, int x, int y) {
 }
 
 void OnMouseClick(int b, int state, int x, int y) {
-	
-	gestor.MouseClick(b, state);
+	mundo.Mouse(x, y);
+	mundo.MouseClick(b, state);
 }
 
 void OnMouseMove(int x, int y){
-	gestor.Mouse(x, y);
+	mundo.Mouse(x, y);
 
 	//glutPostRedisplay();
 }
@@ -135,15 +136,14 @@ void OnMouseMove(int x, int y){
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
 	//poner aqui el código de teclado
-	gestor.press(key);
-	 //presionas la tecla del teclado
+	mundo.teclado.press(key); //presionas la tecla del teclado
 
 	glutPostRedisplay();
 }
 
 void OnRelease(unsigned char key, int x, int y) {
-	 //sueltas la tecla del teclado
-	gestor.unpress(key);
+	mundo.teclado.unpress(key); //sueltas la tecla del teclado
+
 	glutPostRedisplay();
 }
 

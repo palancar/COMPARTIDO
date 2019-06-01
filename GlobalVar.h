@@ -10,6 +10,9 @@ public:
 	static const float Distancia;
 	static const float R_Generacion;
 	static const float R_Destruccion;
+	static const int HP_Inicial;
+	static const int HP_Nave_Enemiga;
+	static const float T_Disparo_NaveEnemiga;
 };
 
 
