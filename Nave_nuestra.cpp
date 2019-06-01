@@ -5,7 +5,7 @@
 
 Nave_nuestra::Nave_nuestra() :Nave() {
 	SetPos(40, 30); //el centro 
-	//SetHP(GV::HP_Inicial);
+	SetHP(GV::HP_Inicial);
 	SetColor(255, 215, 0);
 }
 

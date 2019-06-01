@@ -37,7 +37,7 @@ void Mundo::Mueve(float t)
 	if (floattime >= 1) { //cada segundo, reinicia el tiempo float (milisegundos)
 		floattime = 0; 
 		flancotime = true; //además, indica que hay un flanco
-		inttime++; ///
+		inttime++;
 	}
 	else flancotime = false;
 	floattime += t;
