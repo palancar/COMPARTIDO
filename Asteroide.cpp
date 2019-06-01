@@ -3,7 +3,7 @@
 #include "glut.h"
 
 Asteroide::Asteroide(float rad) : Objeto(rad){
-	SetColor(157, 153, 105);
+	SetColor(191, 183, 104);
 }
 
 void Asteroide::Dibuja() {
