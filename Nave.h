@@ -3,22 +3,24 @@
 #include "Lista.h"
 
 
-class Nave:public Objeto {
-public:
-	
+class Nave:public Objeto { //en principio es nuestra nave
 
-private:
+protected:
 	float point; //ángulo con el que apunta (en radianes)
-
+	int hp; //vida
+	float cicle_time;
 public:
 	Nave();
 	virtual ~Nave() { ; }
 
 	void PointTo(float f) { point = f; }
-	void Dibuja();
-	void Tecla(Teclado &t);
+	virtual void Dibuja();
 
-	void Dispara(lista_disparos &dis);
+	int GetHP() { return hp; }
+	void SetHP(int nhp);
+	void operator --(); //resta 1 a la vida (hp)
 
+	void Dispara(lista_disparos &dis, unsigned char r, unsigned char g, unsigned char b);
+	void Mueve_Disp(float t, lista_disparos& dis); //cosa especial para que dispare cada X tiempo
 };
 

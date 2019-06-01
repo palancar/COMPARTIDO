@@ -1,4 +1,3 @@
-
 #include "Objeto.h"
 #include "glut.h"
 
@@ -29,16 +28,16 @@ void Objeto::SetRadio(float r) {
 	radio = r;
 }
 
-const Vector2D & Objeto::GetPos() {
+Vector2D Objeto::GetPos() {
 	return pos;
 }
-const Vector2D & Objeto::GetVel() {
+Vector2D Objeto::GetVel() {
 	return vel;
 }
-const Vector2D & Objeto::GetAcc() {
+Vector2D Objeto::GetAcc() {
 	return acc;
 }
-const float & Objeto::GetRadio() {
+float Objeto::GetRadio() {
 	return radio;
 }
 
