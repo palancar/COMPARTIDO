@@ -3,8 +3,6 @@
 #include "ETSIDI.h"
 #include "glut.h"
 
-
-//ESTO HA QUEDADO MUY BONITO
 class Gestor  {
 public: 
 	Gestor();   
