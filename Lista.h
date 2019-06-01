@@ -15,3 +15,4 @@ public:
 
 typedef lista lista_disparos;
 typedef lista lista_asteroides;
+typedef lista lista_naves;
