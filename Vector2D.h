@@ -4,7 +4,7 @@
 
 class Vector2D {
 public:
-	
+
 	float x;
 	float y;
 	Vector2D(float x_, float y_) : x(x_), y(y_) { ; }
@@ -21,6 +21,7 @@ public:
 	Vector2D operator - (Vector2D v2);
 	Vector2D operator * (float f);
 	Vector2D operator / (float c);
+	float operator % (Vector2D v2); //operador distancia jeje
 
 	bool operator == (Vector2D v2);
 	bool operator != (Vector2D v2);

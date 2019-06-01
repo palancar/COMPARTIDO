@@ -2,8 +2,8 @@
 #include "GlobalVar.h"
 #include "glut.h"
 
-Asteroide::Asteroide(float rad) : Objeto(rad){
-	SetColor(191, 183, 104);
+Asteroide::Asteroide(float rad) : Objeto(rad) {
+	SetColor(157, 153, 105);
 }
 
 void Asteroide::Dibuja() {

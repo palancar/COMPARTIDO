@@ -35,7 +35,7 @@ Vector2D& Vector2D::rotar(float th) {
 }
 
 /*     ----------------------------
-     --- SOBRECARGA DE OPERADORES ---
+	 --- SOBRECARGA DE OPERADORES ---
 	   ----------------------------      */
 
 Vector2D Vector2D::operator + (Vector2D v2) {
@@ -49,6 +49,12 @@ Vector2D Vector2D::operator * (float f) {
 }
 Vector2D Vector2D::operator / (float c) {
 	return Vector2D(x / c, y / c);
+}
+
+float Vector2D::operator % (Vector2D v2) { //operador distancia jeje
+	float Ax = x - v2.x;
+	float Ay = y - v2.y;
+	return sqrt(Ax * Ax + Ay * Ay);
 }
 
 bool Vector2D::operator == (Vector2D v2) {

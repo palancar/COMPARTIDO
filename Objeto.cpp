@@ -1,11 +1,10 @@
-
 #include "Objeto.h"
 #include "glut.h"
 
 void Objeto::SetPos(float a, float b) {
 	pos = Vector2D(a, b);
 }
-void Objeto::SetVel(float a, float b)	{
+void Objeto::SetVel(float a, float b) {
 	vel = Vector2D(a, b);
 }
 void Objeto::SetAcc(float a, float b) {
@@ -29,16 +28,16 @@ void Objeto::SetRadio(float r) {
 	radio = r;
 }
 
-const Vector2D & Objeto::GetPos() {
+Vector2D Objeto::GetPos() {
 	return pos;
 }
-const Vector2D & Objeto::GetVel() {
+Vector2D Objeto::GetVel() {
 	return vel;
 }
-const Vector2D & Objeto::GetAcc() {
+Vector2D Objeto::GetAcc() {
 	return acc;
 }
-const float & Objeto::GetRadio() {
+float Objeto::GetRadio() {
 	return radio;
 }
 

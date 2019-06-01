@@ -9,7 +9,7 @@ protected:
 	float radio;
 public:
 
-	Objeto(float r) :pos(0, 0), vel(0, 0), acc(0, 0), radio(r), r(255), g(255), b (255) { ; }
+	Objeto(float r) :pos(0, 0), vel(0, 0), acc(0, 0), radio(r), r(255), g(255), b(255) { ; }
 	virtual ~Objeto() { ; }
 
 	void SetPos(float a, float b);
@@ -21,13 +21,14 @@ public:
 	void SetRadio(float r);
 	void SetColor(unsigned char r, unsigned char g, unsigned char b);
 
-	const Vector2D& GetPos();
-	const Vector2D& GetVel();
-	const Vector2D& GetAcc();
-	const float& GetRadio();
+	Vector2D GetPos();
+	Vector2D GetVel();
+	Vector2D GetAcc();
+	float GetRadio();
 
 
 	virtual void Mueve(float t);
 	virtual void Dibuja() = 0;//si da errores, en vez de poner = 0, poner { ; }
-
+	virtual void PointTo(float) { ; }
+	//virtual void Mueve_Disp(float t, lista_disparos& dis) { ; }
 };

@@ -1,7 +1,6 @@
 #include "Disparo.h"
 #include "glut.h"
 
-
 void Disparo::Dibuja() {
 	glPushMatrix();
 	glColor3ub(r, g, b);
@@ -10,5 +9,3 @@ void Disparo::Dibuja() {
 	glPopMatrix();
 
 }
-
-

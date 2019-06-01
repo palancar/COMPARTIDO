@@ -3,14 +3,13 @@
 #include <iostream>
 #include "ETSIDI.h"
 #include "Borde.h"
-#include "Nave.h"
+#include "Nave_nuestra.h"
 #include "Teclado.h"
 #include "Lista.h"
 #include "Choque.h"
 #include "GlobalVar.h"
 
 #include <chrono>
-
 #include <random>
 
 class Mundo{
@@ -38,8 +37,10 @@ public:
 	std::uniform_real_distribution<float> cuartocirculo;
 
 	Borde borde;
-	Nave nave;
+	Nave_nuestra nave;
 	lista_disparos disparo_good;
+	lista_disparos disparo_bad;
 	lista_asteroides asteroids;
+	lista_naves naves_enemigas;
 	Teclado teclado;
 };
