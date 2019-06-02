@@ -7,7 +7,7 @@ Gestor gestor;
 
 //VARIABLES GLOBALES
 const int GV::N_Disparos = 10;
-const float GV::V_Disparos = 30.0;
+const float GV::V_Disparos = 40.0;
 const float GV::V_Nave = 20.0;
 const float GV::Distancia = 82.5;
 const float GV::R_Generacion = 55.0;

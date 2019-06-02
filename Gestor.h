@@ -16,6 +16,9 @@ public:
 	void press(unsigned char key);
 	void SetAuxTi(float aux);
 	void unpress(unsigned char key);
+	void GoToGameOver() { estado = GAMEOVER; }
+	void GoToPausa() { estado = PAUSA; }
+	void GoToJuego() { estado = JUEGO; }
 
 protected:  
 	enum Estado {INICIO, OPCION1,OPCION2,OPCION3,OPCION4,JUEGO,INSTRUCCIONES,PUNTUACIONES,SALIR,PAUSA,GAMEOVER};

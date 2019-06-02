@@ -57,13 +57,13 @@ void Gestor::Dibuja() {
 
 	}
 	else if (estado == JUEGO) {
-
-
-
-
 		mundo.Dibuja();
-
-
+	}
+	else if (estado == PAUSA) {
+		mundo.Dibuja();
+		ETSIDI::setTextColor(1, 1, 0);
+		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 44);
+		ETSIDI::printxy("PAUSA", 30, 30);
 	}
 }
 
@@ -109,8 +109,13 @@ void Gestor::MouseClick(int b, int state) {
 	}
 }
 void Gestor::press(unsigned char key) {
-	if (estado == JUEGO)
+	if ((key == 'p' || key == 'P') && estado == JUEGO)
+		estado = PAUSA;
+	else if ((key == 'p' || key == 'P') && estado == PAUSA)
+		estado = JUEGO;
+	else if (estado == JUEGO)
 		mundo.teclado.press(key);
+	
 }
 void Gestor::unpress(unsigned char key) {
 	if (estado == JUEGO)

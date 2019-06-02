@@ -39,7 +39,7 @@ void Nave::Dispara(lista<Disparo> &dis, unsigned char r, unsigned char g, unsign
 	//se puede usar a partir de aquí, indistintamente, la función fromArgMod(...) y rotar(...)
 	//se usan las dos como ejemplo
 	dis.back().SetPos(pos + Vector2D().fromArgMod(point, radio));
-	dis.back().SetVel(0.5*vel + Vector2D().fromArgMod(point, GV::V_Disparos));
+	dis.back().SetVel(0.2*vel + Vector2D().fromArgMod(point, GV::V_Disparos));
 }
 
 void Nave::SetHP(int nhp) {
