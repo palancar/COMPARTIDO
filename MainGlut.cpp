@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
 
 	//Hola
 
-	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+	glutSetCursor(GLUT_CURSOR_FULL_CROSSHAIR);
 	
 	//Registrar los callbacks
 	glutDisplayFunc(OnDraw);
