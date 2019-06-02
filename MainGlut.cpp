@@ -7,12 +7,8 @@ Gestor gestor;
 
 //VARIABLES GLOBALES
 const int GV::N_Disparos = 10;
-<<<<<<< HEAD
 const float GV::V_Disparos = 40.0;
-=======
-const float GV::V_Disparos = 30.0;
 const float GV::V_Asteroides = 15;
->>>>>>> El-increÃ­ble-Peris-presenta
 const float GV::V_Nave = 20.0;
 const float GV::Distancia = 82.5;
 const float GV::R_Generacion = 55.0;
@@ -28,8 +24,8 @@ void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
 void OnSpecialKeyboardDown(int key, int x, int y); //al pulsar una tecla especial (no se usa)
-void OnMouseClick(int button, int state, int x, int y); //al pulsar el ratón
-void OnMouseMove(int x, int y); //al mover el ratón
+void OnMouseClick(int button, int state, int x, int y); //al pulsar el ratï¿½n
+void OnMouseMove(int x, int y); //al mover el ratï¿½n
 void OnRelease(unsigned char key, int x, int y); //cuando se suelta la tecla
 void OnIdle(); //al no hacer nada (debe hacerse cuando se mantienen varias teclas pulsadas (???)
 
@@ -60,8 +56,8 @@ int main(int argc, char* argv[]) {
 	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown); //al pulsar una tecla
 	glutSpecialFunc(OnSpecialKeyboardDown); //gestion de los cursores 
-	glutMouseFunc(OnMouseClick); //al pulsar el ratón
-	glutPassiveMotionFunc(OnMouseMove); //al MOVER el ratón
+	glutMouseFunc(OnMouseClick); //al pulsar el ratï¿½n
+	glutPassiveMotionFunc(OnMouseMove); //al MOVER el ratï¿½n
 	glutKeyboardUpFunc(OnRelease); //al dejar de pulsar la tecla
 	glutIdleFunc(OnIdle);//cuando no se hace nada
 
@@ -115,7 +111,7 @@ void OnDraw(void)
 void OnTimer(int value)
 {
 	static float aux=0;
-	//poner aqui el código de animacion
+	//poner aqui el cï¿½digo de animacion
 	gestor.Mueve(0.025);
 	gestor.Tecla();
 
@@ -141,7 +137,7 @@ void OnMouseMove(int x, int y){
 
 void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 {
-	//poner aqui el código de teclado
+	//poner aqui el cï¿½digo de teclado
 	gestor.press(key);
 	 //presionas la tecla del teclado
 
