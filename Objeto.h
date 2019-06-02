@@ -7,9 +7,10 @@ protected:
 	unsigned char r, g, b; //colores
 	Vector2D pos, vel, acc;
 	float radio;
+	float V_Nominal;
 public:
 
-	Objeto(float r) :pos(0, 0), vel(0, 0), acc(0, 0), radio(r), r(255), g(255), b(255) { ; }
+	Objeto(float r, float VN) :pos(0, 0), vel(0, 0), acc(0, 0), radio(r), r(255), g(255), b(255), V_Nominal(VN) { ; }
 	virtual ~Objeto() { ; }
 
 	void SetPos(float a, float b);
@@ -20,11 +21,13 @@ public:
 	void SetAcc(const Vector2D & v);
 	void SetRadio(float r);
 	void SetColor(unsigned char r, unsigned char g, unsigned char b);
+	void SetV_Nominal(float VN) { V_Nominal = VN; }
 
 	Vector2D GetPos();
 	Vector2D GetVel();
 	Vector2D GetAcc();
 	float GetRadio();
+	float GetV_Nominal() { return V_Nominal; }
 
 
 	virtual void Mueve(float t);
