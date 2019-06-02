@@ -7,6 +7,7 @@ public:
 	static const int N_Disparos;
 	static const float V_Disparos;
 	static const float V_Nave;
+	static const float V_Asteroides;
 	static const float Distancia;
 	static const float R_Generacion;
 	static const float R_Destruccion;

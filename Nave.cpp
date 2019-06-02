@@ -4,7 +4,7 @@
 #include "GlobalVar.h"
 #include "glut.h"
 
-Nave::Nave() : point(0), Objeto(2.0), hp(GV::HP_Nave_Enemiga), cicle_time(0) {
+Nave::Nave() : point(0), Objeto(2.0, GV::V_Nave), hp(GV::HP_Nave_Enemiga), cicle_time(0) {
 	SetColor(194, 65, 164);
 }
 
@@ -39,7 +39,7 @@ void Nave::Dispara(lista<Disparo> &dis, unsigned char r, unsigned char g, unsign
 	//se puede usar a partir de aquí, indistintamente, la función fromArgMod(...) y rotar(...)
 	//se usan las dos como ejemplo
 	dis.back().SetPos(pos + Vector2D().fromArgMod(point, radio));
-	dis.back().SetVel(0.5*vel + Vector2D().fromArgMod(point, GV::V_Disparos));
+	dis.back().SetVel(0.5*vel + Vector2D().fromArgMod(point, dis.back().GetV_Nominal()));
 }
 
 void Nave::SetHP(int nhp) {
