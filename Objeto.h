@@ -28,7 +28,6 @@ public:
 
 
 	virtual void Mueve(float t);
-	virtual void Dibuja() = 0;//si da errores, en vez de poner = 0, poner { ; }
-	virtual void PointTo(float) { ; }
-	//virtual void Mueve_Disp(float t, lista_disparos& dis) { ; }
+	virtual void Dibuja() = 0;
+	
 };

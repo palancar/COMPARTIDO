@@ -5,6 +5,8 @@
 #include "Borde.h"
 #include "Nave_nuestra.h"
 #include "Teclado.h"
+#include "Disparo.h"
+#include "Asteroide.h"
 #include "Lista.h"
 #include "Choque.h"
 #include "GlobalVar.h"
@@ -30,7 +32,7 @@ public:
 	void Dibuja();
 	void Mouse(int x, int y);
 	void MouseClick(int b, int state);
-	void Interacciones();
+	void Interacciones(float t);
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> circulo;
@@ -38,9 +40,9 @@ public:
 
 	Borde borde;
 	Nave_nuestra nave;
-	lista_disparos disparo_good;
-	lista_disparos disparo_bad;
-	lista_asteroides asteroids;
-	lista_naves naves_enemigas;
+	lista<Disparo> disparo_good;
+	lista<Disparo> disparo_bad;
+	lista<Asteroide> asteroids;
+	lista<Nave> naves_enemigas;
 	Teclado teclado;
 };

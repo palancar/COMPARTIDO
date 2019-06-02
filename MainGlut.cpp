@@ -14,7 +14,7 @@ const float GV::R_Generacion = 55.0;
 const float GV::R_Destruccion = 65.0;
 const int GV::HP_Inicial = 3;
 const int GV::HP_Nave_Enemiga = 5;
-const float GV::T_Disparo_NaveEnemiga = 0.7;
+const float GV::T_Disparo_NaveEnemiga = 0.9;
 
 //los callback, funciones que seran llamadas automaticamente por la glut
 //cuando sucedan eventos
@@ -113,7 +113,6 @@ void OnTimer(int value)
 	//poner aqui el código de animacion
 	gestor.Mueve(0.025);
 	gestor.Tecla();
-	gestor.Interacciones();
 
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);

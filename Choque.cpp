@@ -19,7 +19,6 @@ bool  Choque::dentro(Vector2D pos, float radio) {
 	return true;
 }
 
-
 /*CHOQUES UNITARIOS*/
 
 bool  Choque::choque(Objeto& ob1, Objeto& ob2) {
@@ -30,8 +29,7 @@ bool  Choque::choque(Objeto& ob1, Objeto& ob2) {
 	return false;
 }
 
-bool  Choque::choque_nave(Nave &n, Borde &b) {
-	bool ret_val = false;
+void  Choque::choque_borde(Objeto &n, Borde &b) {
 	Vector2D lim1 = b.GetLim1();
 	Vector2D lim2 = b.GetLim2();
 	Vector2D pos = n.GetPos();
@@ -39,24 +37,20 @@ bool  Choque::choque_nave(Nave &n, Borde &b) {
 	if (pos.x - r / 2 < lim1.x) {
 		n.SetPos(lim1.x + r / 2, pos.y);
 		n.SetVel(0, n.GetVel().y);
-		ret_val = true;
+
 	}
 	else if (pos.x + r / 2 > lim2.x) {
 		n.SetPos(lim2.x - r / 2, pos.y);
-		ret_val = true;
 		n.SetVel(0, n.GetVel().y);
 	}
 	if (pos.y - r / 2 < lim1.y) {
 		n.SetPos(pos.x, lim1.y + r / 2);
-		ret_val = true;
 		n.SetVel(n.GetVel().x, 0);
 	}
 	else if (pos.y + r / 2 > lim2.y) {
 		n.SetPos(pos.x, lim2.y - r / 2);
-		ret_val = true;
 		n.SetVel(n.GetVel().x, 0);
 	}
-	return ret_val;
 }
 
 void  Choque::rebote_objetos(Objeto &o1, Objeto &o2) {
@@ -94,32 +88,31 @@ void  Choque::rebote_objetos(Objeto &o1, Objeto &o2) {
 
 /*CHOQUES DE LISTAS*/
 
-void  Choque::choque_disparos(lista_disparos& ld, Borde& b) {
+void  Choque::choque_disparos(lista<Disparo>& ld, Borde& b) {
 	for (int i = 0; i < ld.size(); i++) {
-		if (!dentro(ld[i]->GetPos(), b)) {
+		if (!dentro(ld[i].GetPos(), b)) {
 			ld.erase(i);
 		}
 	}
 
 }
 
-void  Choque::choque_asteroides(lista_asteroides& la, float radio) {
-
+void  Choque::choque_asteroides(lista<Asteroide>& la, float radio) {
 	for (int i = 0; i < la.size(); i++) {
-		if (!dentro(la[i]->GetPos(), radio)) {
+		if (!dentro(la[i].GetPos(), radio)) {
 			la.erase(i);
 		}
 	}
 
 }
 
-void  Choque::choque_disparos_asteroides(lista_disparos& ld, lista_asteroides& la) {
+void  Choque::choque_disparos_asteroides(lista<Disparo>& ld, lista<Asteroide>& la) {
 	for (int i = 0; i < ld.size(); i++) {
 		for (int j = 0; j < la.size(); j++) {
-			if (choque(*ld[i], *la[j])) {
+			if (choque(ld[i], la[j])) {
 				ld.erase(i);
-				la[j]->SetRadio(la[j]->GetRadio() - 1.5);
-				if (la[j]->GetRadio() < 1) {
+				la[j].SetRadio(la[j].GetRadio() - 1.5);
+				if (la[j].GetRadio() < 1) {
 					la.erase(j);
 				}
 				break; //importante
@@ -128,18 +121,28 @@ void  Choque::choque_disparos_asteroides(lista_disparos& ld, lista_asteroides& l
 	}
 }
 
-void  Choque::choque_asteroides_nave(lista_asteroides& la, Nave n) {
+void  Choque::choque_asteroides_nave(lista<Asteroide>& la, Nave n) {
 	for (int i = 0; i < la.size(); i++) {
-		if (choque(n, *la[i])) {
+		if (choque(n, la[i])) {
 			la.erase(i);
 		}
 	}
 }
 
-void Choque::rebote_lista(lista& la) {
+void Choque::rebote(lista<Asteroide>& la) {
 	for (int i = 0; i < la.size(); i++) {
 		for (int j = i + 1; j < la.size(); j++) {
-			rebote_objetos(*la[i], *la[j]);
+			rebote_objetos(la[i], la[j]);
+		}
+	}
+}
+
+void CQ::nave_dispara(lista<Nave>& ln, lista<Disparo>& ld, float t) {
+	for (int i = 0; i < ln.size(); i++) { 
+		ln[i].cicle_time += t; 
+		if (ln[i].cicle_time >= GV::T_Disparo_NaveEnemiga) {
+			ln[i].Dispara(ld);
+			ln[i].cicle_time = 0;
 		}
 	}
 }

@@ -4,7 +4,7 @@
 #include "GlobalVar.h"
 #include "glut.h"
 
-Nave::Nave() : point(0), Objeto(2.0), hp(GV::HP_Nave_Enemiga) {
+Nave::Nave() : point(0), Objeto(2.0), hp(GV::HP_Nave_Enemiga), cicle_time(0) {
 	SetColor(194, 65, 164);
 }
 
@@ -27,20 +27,19 @@ void Nave::Dibuja() {
 	glPopMatrix();
 }
 
-void Nave::Dispara(lista_disparos &dis, unsigned char r, unsigned char g, unsigned char b) {
+void Nave::Dispara(lista<Disparo> &dis, unsigned char r, unsigned char g, unsigned char b) {
 	if (dis.size() >= GV::N_Disparos) {
 		//return;
 		dis.erase(0); //borra el primer disparo (el más antiguo)
 	}
-	dis.push_back(new Disparo()); //crea un disparo al final
-	dis.back()->SetColor(r, g, b);//color muy bonito :)
-	//
+	dis.push_back(Disparo()); //crea un disparo al final
+	dis.back().SetColor(r, g, b);//color muy bonito :)
 
 	//pedir dibujo si no se entiende jeje
 	//se puede usar a partir de aquí, indistintamente, la función fromArgMod(...) y rotar(...)
 	//se usan las dos como ejemplo
-	dis.back()->SetPos(pos + Vector2D().fromArgMod(point, radio));
-	dis.back()->SetVel(0.5*vel + Vector2D(GV::V_Disparos, 0).rotar(point));
+	dis.back().SetPos(pos + Vector2D().fromArgMod(point, radio));
+	dis.back().SetVel(0.5*vel + Vector2D().fromArgMod(point, GV::V_Disparos));
 }
 
 void Nave::SetHP(int nhp) {
@@ -51,10 +50,3 @@ void Nave::operator --() {
 	hp--;
 }
 
-void Nave::Mueve_Disp(float t, lista_disparos& dis) {
-	cicle_time += t;
-	if (cicle_time >= GV::T_Disparo_NaveEnemiga) {
-		Dispara(dis, 230, 147, 34);
-		cicle_time = 0;
-	}
-}

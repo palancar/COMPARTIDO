@@ -10,7 +10,6 @@ public:
 	void Tecla() { mundo.Tecla(); }
 	void Mueve(float t);   
 	void Dibuja();  
-	void Interacciones() { mundo.Interacciones(); }
 	void Inicializa() { mundo.Inicializa(); }
 	void MouseClick(int b, int state);
 	void Mouse(int x, int y);
