@@ -77,6 +77,7 @@ void Mundo::Mueve(float t)
 
 void Mundo::Interacciones(float t) {
 	Choque::choque_disparos(disparo_good, borde); //CQ es nuestra particular abreviatura de Choque
+	Choque::choque_disparos(disparo_bad, borde);
 	CQ::choque_borde(nave, borde);
 	CQ::choque_asteroides(asteroids, GV::R_Destruccion);
 	CQ::choque_disparos_asteroides(disparo_good, asteroids);
@@ -84,6 +85,7 @@ void Mundo::Interacciones(float t) {
 	CQ::rebote(asteroids);
 
 	CQ::nave_dispara(naves_enemigas, disparo_bad, t);
+
 }
 void Mundo::Inicializa()
 {
