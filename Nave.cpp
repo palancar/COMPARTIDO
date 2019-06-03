@@ -4,7 +4,7 @@
 #include "GlobalVar.h"
 #include "glut.h"
 
-Nave::Nave() : point(0), Objeto(2.0, GV::V_Nave), hp(GV::HP_Nave_Enemiga), cicle_time(0) {
+Nave::Nave(int hp, float vel) : point(0), Objeto(2.0, vel), hp(hp) {
 	SetColor(194, 65, 164);
 }
 
@@ -50,4 +50,5 @@ void Nave::SetHP(int nhp) {
 void Nave::operator --() {
 	hp--;
 }
+
 

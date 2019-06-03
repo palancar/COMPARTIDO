@@ -4,9 +4,9 @@
 #include "GlobalVar.h"
 #include "Asteroide.h"
 #include "glut.h"
+#include "Loop_Generator.h"
 
-Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60),
-generator(std::chrono::system_clock::now().time_since_epoch().count()), circulo(-PI, PI), cuartocirculo(-PI / 4, PI / 4) {
+Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60){
 	;
 }
 
@@ -43,15 +43,14 @@ void Mundo::Dibuja()
 
 void Mundo::Mueve(float t)
 {
-	//Gestión de los tiempos incrementales
-
-
-
 	nave.PointTo((nave.GetXYpoint() - nave.GetPos()).argumento());//la nave apunta a donde debe)
+	
 	naves_enemigas.back().PointTo((nave.GetPos() - naves_enemigas.back().GetPos()).argumento());//las naves enemigas te apuntan
-	//se crean cosas
-	Crear_asteroides(t, 2);
-
+	
+	//CREACIÓN DE OBJETOS	
+	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides);
+	LG::nave_dispara(naves_enemigas, disparo_bad, t, GV::T_Disparo_NaveEnemiga);
+	
 	//cosas se mueven
 	nave.Mueve(t);
 	naves_enemigas.Mueve(t);
@@ -64,20 +63,19 @@ void Mundo::Mueve(float t)
 }
 
 void Mundo::Interacciones(float t) {
-	Choque::choque_disparos(disparo_good, borde); //CQ es nuestra particular abreviatura de Choque
-	Choque::choque_disparos(disparo_bad, borde);
-	CQ::choque_borde(nave, borde);
-	CQ::choque_asteroides(asteroids, GV::R_Destruccion);
-	CQ::choque_disparos_asteroides(disparo_good, asteroids);
-	CQ::choque_asteroides_nave(asteroids, nave);
-	CQ::rebote(asteroids);
+	Choque::choque_lista(disparo_good, borde); //CQ es nuestra particular abreviatura de Choque
+	Choque::choque_lista(disparo_bad, borde);
+	CQ::rebote(nave, borde);
+	CQ::choque_lista(asteroids, GV::R_Destruccion);
+	CQ::choque_lista(disparo_good, asteroids);
+	CQ::choque_lista(asteroids, nave);
+	CQ::rebote_lista(asteroids);
 
-	CQ::nave_dispara(naves_enemigas, disparo_bad, t);
 
 }
 void Mundo::Inicializa()
 {
-	naves_enemigas.push_back(Nave());
+	naves_enemigas.push_back(Nave_mala());
 	naves_enemigas.back().SetPos(60, 45);
 }
 
@@ -98,13 +96,3 @@ void Mundo::MouseClick(int b, int state) {
 	}
 }
 
-void Mundo::Crear_asteroides(float t, float Cycle_time) {
-	static float time = 0;
-	time += t;
-	if (time < Cycle_time) return;
-	float ang = circulo(generator);
-	asteroids.push_back(Asteroide());
-	asteroids.back().SetPos(Vector2D().fromArgMod(ang, GV::R_Generacion) + Vector2D(40, 30));
-	asteroids.back().SetVel(Vector2D().fromArgMod(ang + PI + cuartocirculo(generator), asteroids.back().GetV_Nominal()));
-	time = 0;
-}

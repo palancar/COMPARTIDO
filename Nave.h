@@ -5,13 +5,13 @@
 
 
 class Nave :public Objeto { //en principio es nuestra nave
-	friend class Choque;
+	friend class Loop_Generator;
 protected:
 	float point; //ángulo con el que apunta (en radianes)
 	int hp; //vida
-	float cicle_time;
+
 public:
-	Nave();
+	Nave(int hp, float vel);
 	virtual ~Nave() { ; }
 
 	void PointTo(float f) { point = f; }

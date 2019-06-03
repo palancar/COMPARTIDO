@@ -10,9 +10,8 @@
 #include "Lista.h"
 #include "Choque.h"
 #include "GlobalVar.h"
+#include "Nave_mala.h"
 
-#include <chrono>
-#include <random>
 
 class Mundo{
 	float ojo[3]; //posición del ojo
@@ -32,17 +31,13 @@ public:
 	void MouseClick(int b, int state);
 	void Interacciones(float t);
 
-	void Crear_asteroides(float t, float Cycle_time);
 
-	std::default_random_engine generator;
-	std::uniform_real_distribution<float> circulo;
-	std::uniform_real_distribution<float> cuartocirculo;
 
 	Borde borde;
 	Nave_nuestra nave;
 	lista<Disparo> disparo_good;
 	lista<Disparo> disparo_bad;
 	lista<Asteroide> asteroids;
-	lista<Nave> naves_enemigas;
+	lista<Nave_mala> naves_enemigas;
 	Teclado teclado;
 };
