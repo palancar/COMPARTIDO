@@ -1,5 +1,7 @@
 #include "Gestor.h"
 
+//hola
+
 
 void Gestor::Dibuja() {
 	if (estado == INICIO||estado==OPCION1 || estado == OPCION2 || estado == OPCION3 || estado == OPCION4) {
