@@ -44,22 +44,34 @@ void Mundo::Dibuja()
 void Mundo::Mueve(float t)
 {
 	//Gestión de los tiempos incrementales
+	static float floattime = 0; //milisegundos que han pasado
+	static int inttime = 0; //segundos que han pasado, acumulados
+	static bool flancotime = false; //indica flanco de que acaba de pasar un segundo
+	if (floattime >= 1) { //cada segundo, reinicia el tiempo float (milisegundos)
+		floattime = 0;
+		flancotime = true; //además, indica que hay un flanco
+		inttime++;
+	}
+	else flancotime = false;
+	floattime += t;
 
+
+	if (flancotime && !(inttime % 2)) { //cada 2 segundos, se crea un asteroide
+		float ang = circulo(generator);
+		asteroids.push_back(Asteroide(5.0));
+		asteroids.back().SetPos(Vector2D().fromArgMod(ang, GV::R_Generacion) + Vector2D(40, 30));
+		asteroids.back().SetVel(Vector2D().fromArgMod(ang + PI + cuartocirculo(generator), 15));
+	}
 
 
 	nave.PointTo((nave.GetXYpoint() - nave.GetPos()).argumento());//la nave apunta a donde debe)
 	naves_enemigas.back().PointTo((nave.GetPos() - naves_enemigas.back().GetPos()).argumento());//las naves enemigas te apuntan
-	//se crean cosas
-	Crear_asteroides(t, 2);
-
-	//cosas se mueven
+	
 	nave.Mueve(t);
 	naves_enemigas.Mueve(t);
 	disparo_good.Mueve(t);
 	disparo_bad.Mueve(t);
 	asteroids.Mueve(t);
-
-	//Interacciones
 	Interacciones(t);
 }
 
@@ -96,15 +108,4 @@ void Mundo::MouseClick(int b, int state) {
 	if (b == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		nave.Dispara(disparo_good, 0, 176, 246);
 	}
-}
-
-void Mundo::Crear_asteroides(float t, float Cycle_time) {
-	static float time = 0;
-	time += t;
-	if (time < Cycle_time) return;
-	float ang = circulo(generator);
-	asteroids.push_back(Asteroide());
-	asteroids.back().SetPos(Vector2D().fromArgMod(ang, GV::R_Generacion) + Vector2D(40, 30));
-	asteroids.back().SetVel(Vector2D().fromArgMod(ang + PI + cuartocirculo(generator), asteroids.back().GetV_Nominal()));
-	time = 0;
 }

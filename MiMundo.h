@@ -20,8 +20,10 @@ class Mundo{
 	float time;
 public:
 
+
 	Mundo();
 	~Mundo() { ; }
+
 
 	void Inicializa();
 
@@ -31,8 +33,6 @@ public:
 	void Mouse(int x, int y);
 	void MouseClick(int b, int state);
 	void Interacciones(float t);
-
-	void Crear_asteroides(float t, float Cycle_time);
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> circulo;

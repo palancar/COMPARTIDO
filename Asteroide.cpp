@@ -2,7 +2,7 @@
 #include "GlobalVar.h"
 #include "glut.h"
 
-Asteroide::Asteroide() : Objeto(5.0, GV::V_Asteroides) {
+Asteroide::Asteroide(float rad) : Objeto(rad) {
 	SetColor(157, 153, 105);
 }
 

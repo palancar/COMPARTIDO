@@ -4,7 +4,7 @@
 
 class Asteroide : public Objeto {
 public:
-	Asteroide();
+	Asteroide(float rad);
 	~Asteroide() { ; }
 	void Dibuja();
 };
