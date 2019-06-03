@@ -50,7 +50,7 @@ void Mundo::Mueve(float t)
 	nave.PointTo((nave.GetXYpoint() - nave.GetPos()).argumento());//la nave apunta a donde debe)
 	naves_enemigas.back().PointTo((nave.GetPos() - naves_enemigas.back().GetPos()).argumento());//las naves enemigas te apuntan
 	//se crean cosas
-	Crear_asteroides(t, 2);
+	Crear_asteroides(t, 2.0);
 
 	//cosas se mueven
 	nave.Mueve(t);

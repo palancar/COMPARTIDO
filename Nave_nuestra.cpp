@@ -3,9 +3,8 @@
 #include "GlobalVar.h"
 
 
-Nave_nuestra::Nave_nuestra() :Nave() {
+Nave_nuestra::Nave_nuestra() :Nave(GV::HP_Inicial) {
 	SetPos(40, 30); //el centro 
-	SetHP(GV::HP_Inicial);
 	SetColor(255, 215, 0);
 	SetV_Nominal(GV::V_Nave);
 }

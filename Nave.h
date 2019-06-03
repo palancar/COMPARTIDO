@@ -11,7 +11,7 @@ protected:
 	int hp; //vida
 	float cicle_time;
 public:
-	Nave();
+	Nave(int hp = GV::HP_Nave_Enemiga);
 	virtual ~Nave() { ; }
 
 	void PointTo(float f) { point = f; }
