@@ -73,7 +73,9 @@ void Mundo::Interacciones(float t) {
 	CQ::rebote_lista(asteroids);
 	CQ::rebote_lista(naves_enemigas, borde);
 	CQ::rebote_lista(naves_enemigas, asteroids);
-
+	CQ::choque_lista(disparo_good, naves_enemigas);
+	CQ::rebote_lista(naves_enemigas);
+	CQ::choque_lista(disparo_bad, nave);
 }
 void Mundo::Inicializa()
 {

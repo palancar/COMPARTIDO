@@ -30,6 +30,8 @@ bool Choque::choque(Objeto& ob1, Objeto& ob2) {
 	return false;
 }
 
+
+
 bool Choque::rebote(Nave &n, Borde &b) {
 	bool ret_val = false;
 	Vector2D lim1 = b.GetLim1();
@@ -155,19 +157,48 @@ void Choque::rebote_lista(lista<Nave_mala>& ln, Borde& b) {
 			}
 		}
 	}
-
 }
 
 void Choque::rebote_lista(lista<Nave_mala>& ln, lista<Asteroide>& la) {
 	for (int i = 0; i < ln.size(); i++) {
 		if (ln[i].dentro) {
-			ln[i].radio += 1; //se usa un radio mayor para los revotes con asteroides
+			ln[i].radio += 1; //se usa un radio mayor para los rebotes con asteroides
 			for (int j = 0; j < la.size(); j++) {
 				if (rebote(ln[i], la[j])) {
 					ln[i].GoTo(ETSIDI::lanzaDado(0.0, 80.0), ETSIDI::lanzaDado(0.0, 60.0));
 				}
 			}
 			ln[i].radio -= 1;
+		}
+	}
+}
+
+void Choque::rebote_lista(lista<Nave_mala>& ln) {
+	for (int i = 0; i < ln.size(); i++) {
+		for (int j = i + 1; j < ln.size(); j++) {
+			rebote(ln[i], ln[j]);
+		}
+	}
+}
+
+bool Choque::choque_lista(lista<Disparo>& ld, Nave& n) {
+	for (int i = 0; i < ld.size(); i++) {
+		if (choque(ld[i], n)) {
+			ld.erase(i);
+			n.operator--(); //le resta 1 vida a la nave //no s´´e por qué no funciona solo n--
+			return true;
+		}
+	}
+	return false;
+}
+
+void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln) {
+	for (int i = 0; i < ln.size(); i++) {
+		if (choque_lista(ld, ln[i])) {
+			if (ln[i].GetHP() <= 0) {
+				ln.erase(i);
+				break;
+			}
 		}
 	}
 }

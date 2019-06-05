@@ -30,9 +30,7 @@ void Loop_Generator::Crear_naves(lista<Nave_mala>& ln, float t, static float Cyc
 		float ang = ETSIDI::lanzaDado(-PI, PI);
 		ln.push_back(Nave);
 		ln.back().SetPos(Vector2D().fromArgMod(ang, GV::R_Generacion) + Vector2D(40, 30));
-		vector2d pos_to_go(ETSIDI::lanzaDado(0.0, 80.0), ETSIDI::lanzaDado(0.0, 60.0));
-		float second_ang = (pos_to_go - ln.back().GetPos()).argumento();
-		ln.back().SetVel(Vector2D().fromArgMod(second_ang, ln.back().GetV_Nominal()));
+		ln.back().GoTo(ETSIDI::lanzaDado(0.0, 80.0), ETSIDI::lanzaDado(0.0, 60.0));
 		time = 0;
 	}
 	time += t;
