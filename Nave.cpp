@@ -13,17 +13,17 @@ void Nave::Dibuja() {
 	glPushMatrix();
 	glColor3ub(r, g, b);
 	glTranslatef(pos.x, pos.y, 0);
-	glutSolidTorus(1, radio, 100, 100);
+	glutSolidTorus(1, radio, 50, 50);
 	glPopMatrix();
 
 	//el cono / disparador
 	glPushMatrix();
 	glColor3ub(230, 46, 0);
 	glTranslatef(pos.x, pos.y, 1);
-	glutSolidSphere(radio, 100, 100);
+	glutSolidSphere(radio, 50, 50);
 	glRotatef(90, 0, 1, 0); //primera rotación (para que se vea apropiadamente)
 	glRotatef(point * 180 / PI, -1, 0, 0); //segunda rotación (adonde apunta) //OJO º / rad
-	glutSolidCone(1.4, 5, 100, 100);
+	glutSolidCone(1.4, 5, 50, 50);
 	glPopMatrix();
 }
 

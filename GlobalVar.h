@@ -15,6 +15,7 @@ public:
 	static const int HP_Nave_Enemiga;
 	static const float T_Disparo_NaveEnemiga;
 	static const float T_Ciclo_Asteroides;
+	static const float V_Nave_Mala;
 };
 
 
