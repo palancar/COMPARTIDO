@@ -176,7 +176,9 @@ void Choque::rebote_lista(lista<Nave_mala>& ln, lista<Asteroide>& la) {
 void Choque::rebote_lista(lista<Nave_mala>& ln) {
 	for (int i = 0; i < ln.size(); i++) {
 		for (int j = i + 1; j < ln.size(); j++) {
-			rebote(ln[i], ln[j]);
+
+			if (rebote(ln[i], ln[j]))
+				ln[i].GoTo(ETSIDI::lanzaDado(0.0, 80.0), ETSIDI::lanzaDado(0.0, 60.0));
 		}
 	}
 }

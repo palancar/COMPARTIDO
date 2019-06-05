@@ -49,7 +49,7 @@ void Mundo::Mueve(float t)
 	
 	//CREACIÓN DE OBJETOS	
 	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, Asteroide());
-	LG::Crear_naves(naves_enemigas, t, 10.0, Nave_mala());
+	LG::Crear_naves(naves_enemigas, t, GV::T_Disparo_NaveEnemiga, Nave_mala());
 	LG::nave_dispara(naves_enemigas, disparo_bad, t, GV::T_Disparo_NaveEnemiga);
 	
 	//cosas se mueven
