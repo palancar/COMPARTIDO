@@ -45,13 +45,13 @@ void Mundo::Mueve(float t)
 {
 	nave.PointTo((nave.GetXYpoint() - nave.GetPos()).argumento());//la nave apunta a donde debe)
 	
-	//naves_enemigas.back().PointTo((nave.GetPos() - naves_enemigas.back().GetPos()).argumento());//las naves enemigas te apuntan
+	
 	
 	//CREACIÓN DE OBJETOS	
 	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, Asteroide());
-	LG::Crear_naves(naves_enemigas, t, GV::T_Disparo_NaveEnemiga, Nave_mala());
-	LG::nave_dispara(naves_enemigas, disparo_bad, t, GV::T_Disparo_NaveEnemiga);
-	
+	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, Nave_mala());
+	LG::Naves_disparan(naves_enemigas, disparo_bad, t, GV::T_Disparo_NaveEnemiga);
+	LG::Naves_apuntan(naves_enemigas, nave);
 	//cosas se mueven
 	nave.Mueve(t);
 	naves_enemigas.Mueve(t);
@@ -69,6 +69,7 @@ void Mundo::Interacciones(float t) {
 	CQ::rebote(nave, borde);
 	CQ::choque_lista(asteroids, GV::R_Destruccion);
 	CQ::choque_lista(disparo_good, asteroids);
+	CQ::choque_lista(disparo_bad, asteroids);
 	CQ::choque_lista(asteroids, nave);
 	CQ::rebote_lista(asteroids);
 	CQ::rebote_lista(naves_enemigas, borde);
@@ -79,6 +80,15 @@ void Mundo::Interacciones(float t) {
 }
 void Mundo::Inicializa()
 {
+	naves_enemigas.resize(0);
+	naves_enemigas.shrink_to_fit();
+	disparo_good.resize(0);
+	disparo_good.shrink_to_fit();
+	asteroids.resize(0);
+	asteroids.shrink_to_fit();
+	disparo_bad.resize(0);
+	disparo_bad.shrink_to_fit();
+	nave.SetPos(40, 30);
 }
 
 void Mundo::Tecla() {//CAMBIAR ESTO PLZ

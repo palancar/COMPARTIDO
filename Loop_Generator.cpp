@@ -2,7 +2,7 @@
 #include "Choque.h"
 #include "ETSIDI.h"
 
-void Loop_Generator::nave_dispara(lista<Nave_mala>& ln, lista<Disparo>& ld, float t, float Cycle_time) {
+void Loop_Generator::Naves_disparan(lista<Nave_mala>& ln, lista<Disparo>& ld, float t, float Cycle_time) {
 	for (int i = 0; i < ln.size(); i++) {
 		if (ln[i].time >= Cycle_time) {
 			ln[i].Dispara(ld);
@@ -24,7 +24,7 @@ void Loop_Generator::Crear_asteroides(lista<Asteroide> & la, float t, float Cycl
 	time += t;
 }
 
-void Loop_Generator::Crear_naves(lista<Nave_mala>& ln, float t, static float Cycle_time, const Nave_mala& Nave){
+void Loop_Generator::Crear_naves(lista<Nave_mala>& ln, float t, float Cycle_time, const Nave_mala& Nave){
 	static float time = 0;
 	if (time >= Cycle_time) {
 		float ang = ETSIDI::lanzaDado(-PI, PI);
@@ -34,4 +34,14 @@ void Loop_Generator::Crear_naves(lista<Nave_mala>& ln, float t, static float Cyc
 		time = 0;
 	}
 	time += t;
+}
+
+void Loop_Generator::Naves_apuntan(lista<Nave_mala>& ln, Nave_nuestra& n) {
+	for (int i = 0; i < ln.size(); i++) {
+		float ang = (n.GetPos() - ln[i].GetPos()).argumento();
+		if (ln[i].time >= GV::T_Disparo_NaveEnemiga) {
+			ang += ETSIDI::lanzaDado(-PI / 8, PI / 8);
+		}
+		ln[i].PointTo(ang);
+	}
 }

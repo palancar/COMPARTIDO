@@ -10,6 +10,26 @@ void Gestor::Dibuja() {
 			40, 30, 0,      // hacia que punto mira  
 			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
 		glEnable(GL_LIGHTING);
+
+		//
+		glEnable(GL_LIGHTING);
+
+		glEnable(GL_TEXTURE_2D);
+
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("COMPARTIDO/imagenes/superfondo.png").id);
+		glDisable(GL_LIGHTING);
+		glBegin(GL_POLYGON);
+		glColor3f(1, 1, 1);
+
+		glTexCoord2d(0, 1);		glVertex3f(0, 0, -2.1);
+		glTexCoord2d(1, 1);		glVertex3f(80, 0, -2.1);
+		glTexCoord2d(1, 0);		glVertex3f(80, 60, -2.1);
+		glTexCoord2d(0, 0);		glVertex3f(0, 60, -2.1);
+		glEnd();
+
+		glEnable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
+		//
 		if (estado == OPCION1) { //dibuja cuadraditos de seleccion
 			glColor3b(2, 25, 25);
 			glBegin(GL_POLYGON);
@@ -46,7 +66,6 @@ void Gestor::Dibuja() {
 			glVertex3d(50, 19, -2);
 			glEnd();
 		}
-
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 44);
 		ETSIDI::printxy("SPACE DESTROYERS", 9, 45);
@@ -55,7 +74,7 @@ void Gestor::Dibuja() {
 		ETSIDI::printxy("INSTRUCCIONES", 20, 30);
 		ETSIDI::printxy("PUNTUACIONES", 20, 25);
 		ETSIDI::printxy("SALIR", 20, 20);
-
+		
 
 	}
 	else if (estado == JUEGO) {
@@ -100,8 +119,10 @@ void Gestor::MouseClick(int b, int state) {
 	if (estado == JUEGO)
 		mundo.MouseClick(b, state);
 	else if(b == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {		//hacer click en las opciones te lleva a las distintos menus
-		if (estado == OPCION1)
+		if (estado == OPCION1) {
+			mundo.Inicializa();
 			estado = JUEGO;
+		}
 		else if (estado == OPCION2)
 			estado = INSTRUCCIONES;
 		else if (estado == OPCION3)
