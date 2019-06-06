@@ -8,4 +8,5 @@ public:
 	void press(unsigned char c);
 	void unpress(unsigned char c);
 	bool verify(unsigned char c);
+	void inicializa();
 };

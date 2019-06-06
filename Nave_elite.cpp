@@ -8,6 +8,7 @@ Nave_elite::Nave_elite() {
 	SetRadio(3.25);
 	Cycle_time = GV::T_Disparo_Nave_elite;
 	SetColor(93, 31, 31);
+	puntos = 500;
 }
 
 void Nave_elite::Dibuja() {

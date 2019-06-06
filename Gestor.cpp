@@ -79,7 +79,7 @@ void Gestor::Dibuja() {
 		mundo.Dibuja();
 		HP=mundo.GetHP();
 		char txt[100];
-		snprintf(txt, 100, "VIDAS: %d", HP);
+		snprintf(txt, 100, "VIDAS: %d", HP); //en serio, printf ??? Jajaja
 
 		Puntos = mundo.GetPuntos();
 		char TXT[100];

@@ -19,5 +19,5 @@ void Disparo_elite::Dibuja() {
 
 void Disparo_elite::Mueve(float t) {
 	Objeto::Mueve(t);
-	radio += 0.03;
+	radio += 0.035;
 }

@@ -9,3 +9,8 @@ void Teclado::unpress(unsigned char c) {
 bool Teclado::verify(unsigned char c) {
 	return state[c];
 }
+
+void Teclado::inicializa() {
+	for (int i = 0; i < 256; i++)
+		state[i] = false;
+}

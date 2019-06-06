@@ -60,7 +60,7 @@ void Mundo::Mueve(float t)
 	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, new Nave_mala(), time1);
 
 	static float time2 = 0;
-	LG::Crear_naves(naves_enemigas, t, 15.0, new Nave_elite(), time2);
+	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave_elite, new Nave_elite(), time2);
 
 	LG::Naves_disparan(naves_enemigas, disparo_bad, t);
 	LG::Naves_apuntan(naves_enemigas, nave);
@@ -110,6 +110,8 @@ void Mundo::Inicializa()
 	asteroids.shrink_to_fit();
 	disparo_bad.resize(0);
 	disparo_bad.shrink_to_fit();
+
+	teclado.inicializa();
 
 	nave.SetPos(40, 30);
 	nave.SetHP(GV::HP_Inicial);

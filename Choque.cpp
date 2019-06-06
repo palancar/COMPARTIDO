@@ -147,11 +147,11 @@ void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la) {
 	}
 }
 
-
 void Choque::choque_lista(lista<Asteroide>& la, Nave& n) {
 	for (int i = 0; i < la.size(); i++) {
 		if (choque(n, la[i])) {
 			la.erase(i);
+			n.operator --();
 		}
 	}
 }
@@ -216,9 +216,10 @@ void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, int &puntos)
 	for (int i = 0; i < ln.size(); i++) {
 		if (choque_lista(ld, ln[i])) {
 			if (ln[i].GetHP() <= 0) {
+				puntos += ln[i].puntos;
 				ln.erase(i);
 				ETSIDI::play("COMPARTIDO/sonidos/ExploNave.wav");
-				puntos += 350;
+
 				break;
 			}
 		}
