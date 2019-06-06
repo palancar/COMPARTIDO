@@ -6,6 +6,7 @@ void Loop_Generator::Naves_disparan(lista<Nave_mala>& ln, lista<Disparo>& ld, fl
 	for (int i = 0; i < ln.size(); i++) {
 		if (ln[i].time >= Cycle_time) {
 			ln[i].Dispara(ld);
+			ETSIDI::play("COMPARTIDO/sonidos/disparo2.wav");
 			ln[i].time = 0;
 		}
 		ln[i].time += t;

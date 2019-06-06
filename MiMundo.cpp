@@ -68,13 +68,13 @@ void Mundo::Interacciones(float t) {
 	Choque::choque_lista(disparo_bad, borde);
 	CQ::rebote(nave, borde);
 	CQ::choque_lista(asteroids, GV::R_Destruccion);
-	CQ::choque_lista(disparo_good, asteroids);
-	CQ::choque_lista(disparo_bad, asteroids);
+	CQ::choque_lista(disparo_good, asteroids,Puntos);		//se suman tambien los puntos
+	CQ::choque_lista(disparo_bad, asteroids,NoPuntos);
 	CQ::choque_lista(asteroids, nave);
 	CQ::rebote_lista(asteroids);
 	CQ::rebote_lista(naves_enemigas, borde);
 	CQ::rebote_lista(naves_enemigas, asteroids);
-	CQ::choque_lista(disparo_good, naves_enemigas);
+	CQ::choque_lista(disparo_good, naves_enemigas,Puntos); //se suman tambien los puntos
 	CQ::rebote_lista(naves_enemigas);
 	CQ::choque_lista(disparo_bad, nave);
 }
@@ -89,6 +89,7 @@ void Mundo::Inicializa()
 	disparo_bad.resize(0);
 	disparo_bad.shrink_to_fit();
 	nave.SetPos(40, 30);
+	nave.SetHP(GV::HP_Inicial);
 }
 
 void Mundo::Tecla() {//CAMBIAR ESTO PLZ
@@ -105,6 +106,7 @@ void Mundo::Mouse(int x, int y) {
 void Mundo::MouseClick(int b, int state) {
 	if (b == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		nave.Dispara(disparo_good, 0, 176, 246);
+		ETSIDI::play("COMPARTIDO/sonidos/disparo1.mp3");
 	}
 }
 

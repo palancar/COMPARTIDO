@@ -22,7 +22,9 @@ public:
 
 protected:  
 	enum Estado {INICIO, OPCION1,OPCION2,OPCION3,OPCION4,JUEGO,INSTRUCCIONES,PUNTUACIONES,SALIR,PAUSA,GAMEOVER};
-	int auxTitulo;
+	int HP;
+	int Puntos;
 	Estado estado;
 	Mundo mundo; 
+	int auxTitulo;
 }; 

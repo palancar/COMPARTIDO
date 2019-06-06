@@ -17,6 +17,8 @@ class Mundo{
 	float ojo[3]; //posición del ojo
 	float mira[3]; //punto al que mira
 	float time;
+	int Puntos;
+	int NoPuntos; //se guardan los puntos que sumarian en algunos casos las naves enemigas.
 public:
 
 	Mundo();
@@ -30,7 +32,10 @@ public:
 	void Mouse(int x, int y);
 	void MouseClick(int b, int state);
 	void Interacciones(float t);
-
+	void SumaPuntos(int p) { Puntos += p; }
+	int GetHP() { return nave.GetHP(); }
+	void SetPuntos() { Puntos = 0; }
+	int GetPuntos() { return Puntos; }
 
 
 	Borde borde;

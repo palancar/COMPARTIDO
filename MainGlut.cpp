@@ -21,6 +21,7 @@ float GV::T_Ciclo_Asteroides = 1.75;
 float GV::T_Ciclo_Nave = 10.0;
 
 
+
 //los callback, funciones que seran llamadas automaticamente por la glut
 //cuando sucedan eventos
 //NO HACE FALTA LLAMARLAS EXPLICITAMENTE
@@ -65,7 +66,7 @@ int main(int argc, char* argv[]) {
 	glutKeyboardUpFunc(OnRelease); //al dejar de pulsar la tecla
 	glutIdleFunc(OnIdle);//cuando no se hace nada
 
-
+	ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
 	gestor.Inicializa();
 
 	//pasarle el control a GLUT,que llamara a los callbacks

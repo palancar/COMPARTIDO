@@ -115,20 +115,26 @@ void Choque::choque_lista(lista<Asteroide>& la, float radio) {
 
 }
 
-void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la) {
+void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,int &puntos) {
 	for (int i = 0; i < ld.size(); i++) {
 		for (int j = 0; j < la.size(); j++) {
 			if (choque(ld[i], la[j])) {
 				ld.erase(i);
 				la[j].SetRadio(la[j].GetRadio() - 1.5);
+				ETSIDI::play("COMPARTIDO/sonidos/HIT.wav");
+				puntos += 20;
 				if (la[j].GetRadio() < 1) {
 					la.erase(j);
+					puntos += 20;
 				}
 				break; //importante
 			}
 		}
 	}
 }
+
+
+
 
 void Choque::choque_lista(lista<Asteroide>& la, Nave& n) {
 	for (int i = 0; i < la.size(); i++) {
@@ -194,13 +200,16 @@ bool Choque::choque_lista(lista<Disparo>& ld, Nave& n) {
 	return false;
 }
 
-void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln) {
+void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, int &puntos) {
 	for (int i = 0; i < ln.size(); i++) {
 		if (choque_lista(ld, ln[i])) {
 			if (ln[i].GetHP() <= 0) {
 				ln.erase(i);
+				ETSIDI::play("COMPARTIDO/sonidos/ExploNave.wav");
+				puntos += 350;
 				break;
 			}
 		}
 	}
 }
+
