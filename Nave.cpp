@@ -35,7 +35,7 @@ void Nave::Dispara(lista<Disparo> &dis, unsigned char r, unsigned char g, unsign
 	//se puede usar a partir de aquí, indistintamente, la función fromArgMod(...) y rotar(...)
 	//se usan las dos como ejemplo
 	dis.back()->SetPos(pos + Vector2D().fromArgMod(point, radio));
-	dis.back()->SetVel(Vector2D().fromArgMod(point, dis.back()->GetV_Nominal()));
+	dis.back()->SetVel(vel*0.2 + Vector2D().fromArgMod(point, dis.back()->GetV_Nominal()));
 
 }
 

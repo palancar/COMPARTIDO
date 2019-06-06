@@ -2,6 +2,7 @@
 #include "MiMundo.h" 
 #include "ETSIDI.h"
 #include "glut.h"
+#include "Jugadores.h"
 
 class Gestor  {
 public: 
@@ -27,4 +28,6 @@ protected:
 	Estado estado;
 	Mundo mundo; 
 	int auxTitulo;
+	///////////////////////////
+	Player holagente;
 }; 

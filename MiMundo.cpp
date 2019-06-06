@@ -91,7 +91,7 @@ void Mundo::Interacciones(float t) {
 	CQ::rebote(nave, borde);
 	CQ::choque_lista(asteroids, GV::R_Destruccion);
 	CQ::choque_lista(disparo_good, asteroids,Puntos);		//se suman tambien los puntos
-	CQ::choque_lista(disparo_bad, asteroids,NoPuntos);
+	CQ::choque_lista(disparo_bad, asteroids);
 	CQ::choque_lista(asteroids, nave);
 	CQ::rebote_lista(asteroids);
 	CQ::rebote_lista(naves_enemigas, borde);
@@ -102,14 +102,10 @@ void Mundo::Interacciones(float t) {
 }
 void Mundo::Inicializa()
 {
-	naves_enemigas.resize(0);
-	naves_enemigas.shrink_to_fit();
-	disparo_good.resize(0);
-	disparo_good.shrink_to_fit();
-	asteroids.resize(0);
-	asteroids.shrink_to_fit();
-	disparo_bad.resize(0);
-	disparo_bad.shrink_to_fit();
+	naves_enemigas.Vaciar();
+	disparo_good.Vaciar();
+	asteroids.Vaciar();
+	disparo_bad.Vaciar();
 
 	teclado.inicializa();
 

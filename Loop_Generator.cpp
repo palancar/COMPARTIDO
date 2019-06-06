@@ -40,9 +40,6 @@ void Loop_Generator::Crear_naves(lista<Nave_mala>& ln, float t, float Cycle_time
 void Loop_Generator::Naves_apuntan(lista<Nave_mala>& ln, Nave_nuestra& n) {
 	for (int i = 0; i < ln.size(); i++) {
 		float ang = (n.GetPos() - ln[i].GetPos()).argumento();
-		if (ln[i].time >= GV::T_Disparo_NaveEnemiga) {
-			ang += ETSIDI::lanzaDado(-PI / 8, PI / 8);
-		}
 		ln[i].PointTo(ang);
 	}
 }

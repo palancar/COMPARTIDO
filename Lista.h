@@ -9,6 +9,7 @@ public:
 	void Mueve(float t);
 	void erase(unsigned int pos);
 	T& operator [](int pos);
+	void Vaciar();
 };
 
 template <class T> void lista<T>::Dibuja() {
@@ -29,4 +30,12 @@ template <class T> void lista<T>::erase(unsigned int pos) {
 
 template <class T> T& lista<T>::operator [](int pos) {
 	return *this->vector::operator[] (pos);
+}
+
+template <class T> void lista<T>::Vaciar() {
+	for (int i = 0; i < this->size(); i++) {
+		delete this->vector::operator[] (i);
+	}
+	this->vector::resize(0);
+	this->vector::shrink_to_fit();
 }

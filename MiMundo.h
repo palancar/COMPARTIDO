@@ -18,7 +18,6 @@ class Mundo{
 	float mira[3]; //punto al que mira
 	float time;
 	int Puntos;
-	int NoPuntos; //se guardan los puntos que sumarian en algunos casos las naves enemigas.
 public:
 
 	Mundo();

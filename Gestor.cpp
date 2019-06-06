@@ -95,7 +95,7 @@ void Gestor::Dibuja() {
 		if (HP == 0) {
 			estado=GAMEOVER;
 			ETSIDI::play("COMPARTIDO/sonidos/GAMEOVER.mp3");
-			mundo.Inicializa();
+			//mundo.Inicializa(); //innecesario, ¿no?
 		}
 	}
 	else if (estado == INSTRUCCIONES) {
@@ -132,10 +132,16 @@ void Gestor::Dibuja() {
 		ETSIDI::stopMusica();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 50);
-		ETSIDI::printxy("GAME OVER", 20, 32);
+		ETSIDI::printxy("GAME OVER", 20, 50);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 34);
-		ETSIDI::printxy("Pulsa .Esc. para  volver", 9, 25);
-		ETSIDI::printxy("al menu principal", 17, 20);
+		ETSIDI::printxy("Pulsa .Esc. para  volver", 9, 10);
+		ETSIDI::printxy("al menu principal", 17, 5);
+
+		//////////////////////////
+		char token;
+		holagente;
+
+
 	}
 }
 
@@ -143,6 +149,7 @@ void Gestor::Mueve(float t) {
 	if (estado ==JUEGO)
 		mundo.Mueve(t);
 }
+
 Gestor::Gestor() {
 	estado = INICIO;
 
@@ -191,6 +198,7 @@ void Gestor::MouseClick(int b, int state) {
 		}
 	}
 }
+
 void Gestor::press(unsigned char key) {
 	if ((key == 'p' || key == 'P') && estado == JUEGO)
 		estado = PAUSA;

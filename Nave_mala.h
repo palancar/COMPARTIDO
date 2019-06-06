@@ -18,4 +18,5 @@ public:
 	void GoTo(float x, float y) {
 		GoTo(Vector2D(x, y));
 	}
+	virtual void Dispara(lista<Disparo> &dis, unsigned char r = 245, unsigned char g = 176, unsigned char b = 65);
 };

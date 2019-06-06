@@ -22,7 +22,7 @@ float GV::R_Asteroide = 5.0;
 float GV::V_Nave_elite = 5;
 float GV::HP_Nave_elite = 10;
 float GV::V_Disparo_elite = 30.0;
-float GV::T_Disparo_Nave_elite = 2.1;
+float GV::T_Disparo_Nave_elite = 0.9;
 float GV::T_Ciclo_Nave_elite = 14.75;
 
 
