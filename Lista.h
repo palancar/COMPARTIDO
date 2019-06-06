@@ -3,11 +3,12 @@
 
 //Simplemente es la clase vector<...> de siempre, pero con otro nombre y dos funciones más
 
-template <class T> class lista : public std::vector<T> {
+template <class T> class lista : public std::vector<T*> {
 public:
 	void Dibuja();
 	void Mueve(float t);
 	void erase(unsigned int pos);
+	T& operator [](int pos);
 };
 
 template <class T> void lista<T>::Dibuja() {
@@ -21,7 +22,11 @@ template <class T> void lista<T>::Mueve(float t) {
 }
 
 template <class T> void lista<T>::erase(unsigned int pos) {
+	delete this->vector::operator[] (pos);
 	this->vector::erase(this->begin() + pos);
 	this->shrink_to_fit();
 }
 
+template <class T> T& lista<T>::operator [](int pos) {
+	return *this->vector::operator[] (pos);
+}

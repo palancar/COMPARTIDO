@@ -45,6 +45,4 @@ public:
 	lista<Asteroide> asteroids;
 	lista<Nave_mala> naves_enemigas;
 	Teclado teclado;
-
-	Nave_elite prueba;
 };

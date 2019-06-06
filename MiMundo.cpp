@@ -1,6 +1,4 @@
 #include <iostream>
-#include <sstream>
-#include <string>
 #include "MiMundo.h"
 #include <math.h>
 #include "GlobalVar.h"
@@ -37,13 +35,6 @@ void Mundo::Dibuja()
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 
-	//DIBUJA LAS VIDAS
-	std::ostringstream vida;
-	vida << "Vida: " << nave.GetHP();
-
-	ETSIDI::setTextColor(1, 1, 0);
-	ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 25);
-	ETSIDI::printxy(vida.str().c_str(), 2, 56, 2);
 	
 
 
@@ -55,8 +46,6 @@ void Mundo::Dibuja()
 	disparo_bad.Dibuja();
 	asteroids.Dibuja();
 
-	//
-	prueba.Dibuja();
 }
 
 void Mundo::Mueve(float t)
@@ -65,15 +54,17 @@ void Mundo::Mueve(float t)
 	
 	
 	//CREACIÓN DE OBJETOS	
-	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, Asteroide(GV::R_Asteroide));
+	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, new Asteroide(GV::R_Asteroide));
+
 	static float time1 = 0;
-	//LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, Nave_mala(), time1);
+	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, new Nave_mala(), time1);
+
 	static float time2 = 0;
-	/////
-	//LG::Crear_naves(naves_enemigas, t, 4.0, Nave_elite(), time2);
+	LG::Crear_naves(naves_enemigas, t, 15.0, new Nave_elite(), time2);
 
 	LG::Naves_disparan(naves_enemigas, disparo_bad, t);
 	LG::Naves_apuntan(naves_enemigas, nave);
+
 	//cosas se mueven
 	nave.Mueve(t);
 	naves_enemigas.Mueve(t);
@@ -82,13 +73,13 @@ void Mundo::Mueve(float t)
 	asteroids.Mueve(t);
 
 	//
-	prueba.Mueve(t);
+	/*prueba.Mueve(t);
 	static float ggwp = 0;
 	ggwp += t;
 	if (ggwp > 1) {
 		prueba.Dispara(disparo_bad, 155, 155, 155);
 		ggwp = 0;
-	}
+	}*/
 
 	//Interacciones
 	Interacciones(t);
@@ -122,12 +113,8 @@ void Mundo::Inicializa()
 
 	nave.SetPos(40, 30);
 	nave.SetHP(GV::HP_Inicial);
-<<<<<<< Updated upstream
-=======
 
-	//
-	prueba.SetPos(50, 45);
->>>>>>> Stashed changes
+
 }
 
 void Mundo::Tecla() {//CAMBIAR ESTO PLZ

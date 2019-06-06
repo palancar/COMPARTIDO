@@ -11,9 +11,9 @@ void Disparo_elite::Dibuja() {
 	glPushMatrix();
 	glColor3ub(r, g, b);
 	glTranslatef(pos.x, pos.y, 1);
-	glutSolidTorus(radio, 0.2, 50, 50);
+	glutSolidTorus(0.2, radio, 50, 50);
 	glColor3ub(235, 241, 16);
-	glutWireTorus(radio, 0.5, 50, 50);
+	glutWireTorus(0.5, radio, 10, 10);
 	glPopMatrix();
 }
 

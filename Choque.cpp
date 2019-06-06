@@ -131,7 +131,21 @@ void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,int &puntos) 
 	}
 }
 
-
+void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la) {
+	for (int i = 0; i < ld.size(); i++) {
+		for (int j = 0; j < la.size(); j++) {
+			if (choque(ld[i], la[j])) {
+				ld.erase(i);
+				la[j].SetRadio(la[j].GetRadio() - 1.5);
+				ETSIDI::play("COMPARTIDO/sonidos/HIT.wav");
+				if (la[j].GetRadio() < 1) {
+					la.erase(j);
+				}
+				break; //importante
+			}
+		}
+	}
+}
 
 
 void Choque::choque_lista(lista<Asteroide>& la, Nave& n) {

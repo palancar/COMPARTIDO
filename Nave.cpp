@@ -32,14 +32,14 @@ void Nave::Dispara(lista<Disparo> &dis, unsigned char r, unsigned char g, unsign
 		//return;
 		dis.erase(0); //borra el primer disparo (el más antiguo)
 	}
-	dis.push_back(Disparo()); //crea un disparo al final
-	dis.back().SetColor(r, g, b);//color muy bonito :)
+	dis.push_back(new Disparo()); //crea un disparo al final
+	dis.back()->SetColor(r, g, b);//color muy bonito :)
 
 	//pedir dibujo si no se entiende jeje
 	//se puede usar a partir de aquí, indistintamente, la función fromArgMod(...) y rotar(...)
 	//se usan las dos como ejemplo
-	dis.back().SetPos(pos + Vector2D().fromArgMod(point, radio));
-	dis.back().SetVel(0.2*vel + Vector2D().fromArgMod(point, dis.back().GetV_Nominal()));
+	dis.back()->SetPos(pos + Vector2D().fromArgMod(point, radio));
+	dis.back()->SetVel(0.2*vel + Vector2D().fromArgMod(point, dis.back()->GetV_Nominal()));
 
 }
 
