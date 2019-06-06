@@ -10,7 +10,7 @@
 #include "Lista.h"
 #include "Choque.h"
 #include "GlobalVar.h"
-#include "Nave_mala.h"
+#include "Nave_elite.h"
 
 
 class Mundo{
@@ -45,4 +45,6 @@ public:
 	lista<Asteroide> asteroids;
 	lista<Nave_mala> naves_enemigas;
 	Teclado teclado;
+
+	Nave_elite prueba;
 };

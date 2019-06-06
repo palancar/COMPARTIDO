@@ -20,7 +20,7 @@ public:
 	int GetHP() { return hp; }
 	void SetHP(int nhp);
 	void operator --(); //resta 1 a la vida (hp)
-	void Dispara(lista<Disparo> &dis, unsigned char r = 245, unsigned char g = 176, unsigned char b = 65); //rgb color de los disparos
+	virtual void Dispara(lista<Disparo> &dis, unsigned char r = 245, unsigned char g = 176, unsigned char b = 65); //rgb color de los disparos
 
 };
 

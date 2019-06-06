@@ -30,8 +30,6 @@ bool Choque::choque(Objeto& ob1, Objeto& ob2) {
 	return false;
 }
 
-
-
 bool Choque::rebote(Nave &n, Borde &b) {
 	bool ret_val = false;
 	Vector2D lim1 = b.GetLim1();

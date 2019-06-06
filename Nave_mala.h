@@ -7,6 +7,7 @@ class Nave_mala : public Nave{
 protected:
 	float time;
 	bool dentro;
+	float Cycle_time;
 public:
 	~Nave_mala() { ; }
 	Nave_mala();

@@ -18,6 +18,12 @@ public:
 	static float T_Disparo_NaveEnemiga;
 	static float T_Ciclo_Asteroides;
 	static float T_Ciclo_Nave;
+	//
+	static float R_Asteroide;
+	static float V_Nave_elite;
+	static float HP_Nave_elite;
+	static float V_Disparo_elite;
+	static float T_Disparo_Nave_elite;
 };
 
 

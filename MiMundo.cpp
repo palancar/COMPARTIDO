@@ -1,10 +1,14 @@
 #include <iostream>
+#include <sstream>
+#include <string>
 #include "MiMundo.h"
 #include <math.h>
 #include "GlobalVar.h"
 #include "Asteroide.h"
-#include "glut.h"
+#include "Nave_elite.h"
 #include "Loop_Generator.h"
+#include "ETSIDI.h"
+#include "glut.h"
 
 Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60){
 	;
@@ -33,12 +37,26 @@ void Mundo::Dibuja()
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 
+	//DIBUJA LAS VIDAS
+	std::ostringstream vida;
+	vida << "Vida: " << nave.GetHP();
+
+	ETSIDI::setTextColor(1, 1, 0);
+	ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 25);
+	ETSIDI::printxy(vida.str().c_str(), 2, 56, 2);
+	
+
+
+
 	borde.Dibuja();
 	nave.Dibuja();
 	naves_enemigas.Dibuja();
 	disparo_good.Dibuja();
 	disparo_bad.Dibuja();
 	asteroids.Dibuja();
+
+	//
+	prueba.Dibuja();
 }
 
 void Mundo::Mueve(float t)
@@ -46,11 +64,15 @@ void Mundo::Mueve(float t)
 	nave.PointTo((nave.GetXYpoint() - nave.GetPos()).argumento());//la nave apunta a donde debe)
 	
 	
-	
 	//CREACIÓN DE OBJETOS	
-	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, Asteroide());
-	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, Nave_mala());
-	LG::Naves_disparan(naves_enemigas, disparo_bad, t, GV::T_Disparo_NaveEnemiga);
+	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, Asteroide(GV::R_Asteroide));
+	static float time1 = 0;
+	//LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, Nave_mala(), time1);
+	static float time2 = 0;
+	/////
+	//LG::Crear_naves(naves_enemigas, t, 4.0, Nave_elite(), time2);
+
+	LG::Naves_disparan(naves_enemigas, disparo_bad, t);
 	LG::Naves_apuntan(naves_enemigas, nave);
 	//cosas se mueven
 	nave.Mueve(t);
@@ -58,6 +80,15 @@ void Mundo::Mueve(float t)
 	disparo_good.Mueve(t);
 	disparo_bad.Mueve(t);
 	asteroids.Mueve(t);
+
+	//
+	prueba.Mueve(t);
+	static float ggwp = 0;
+	ggwp += t;
+	if (ggwp > 1) {
+		prueba.Dispara(disparo_bad, 155, 155, 155);
+		ggwp = 0;
+	}
 
 	//Interacciones
 	Interacciones(t);
@@ -88,8 +119,15 @@ void Mundo::Inicializa()
 	asteroids.shrink_to_fit();
 	disparo_bad.resize(0);
 	disparo_bad.shrink_to_fit();
+
 	nave.SetPos(40, 30);
 	nave.SetHP(GV::HP_Inicial);
+<<<<<<< Updated upstream
+=======
+
+	//
+	prueba.SetPos(50, 45);
+>>>>>>> Stashed changes
 }
 
 void Mundo::Tecla() {//CAMBIAR ESTO PLZ

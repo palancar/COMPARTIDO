@@ -18,10 +18,10 @@ void Gestor::Dibuja() {
 		glBegin(GL_POLYGON);
 		glColor3f(255, 255,255);
 
-		glTexCoord2d(0, 1);		glVertex3f(0, 0, -2.1);
-		glTexCoord2d(1, 1);		glVertex3f(80, 0, -2.1);
-		glTexCoord2d(1, 0);		glVertex3f(80, 60, -2.1);
-		glTexCoord2d(0, 0);		glVertex3f(0, 60, -2.1);
+		glTexCoord2d(0, 1);		glVertex3f(-2, -2, -2.1);
+		glTexCoord2d(1, 1);		glVertex3f(82, -2, -2.1);
+		glTexCoord2d(1, 0);		glVertex3f(82, 62, -2.1);
+		glTexCoord2d(0, 0);		glVertex3f(-2, 62, -2.1);
 		glEnd();
 
 		glDisable(GL_LIGHTING);
