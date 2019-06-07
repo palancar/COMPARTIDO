@@ -18,6 +18,9 @@ class Mundo{
 	float mira[3]; //punto al que mira
 	float time;
 	int Puntos;
+
+	float time1;//necesarios por ciertos motivos relacionados con la generación de naves
+	float time2;
 public:
 
 	Mundo();

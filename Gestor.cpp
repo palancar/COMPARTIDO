@@ -1,7 +1,7 @@
 #include "Gestor.h"
 
 //hola
-
+using namespace std;
 void Gestor::Dibuja() {
 
 	if (estado == INICIO||estado==OPCION1 || estado == OPCION2 || estado == OPCION3 || estado == OPCION4) {
@@ -138,8 +138,8 @@ void Gestor::Dibuja() {
 		ETSIDI::printxy("al menu principal", 17, 5);
 
 		//////////////////////////
-		char token;
-		holagente;
+
+		ETSIDI::printxy(holagente.Name.c_str(), 7, 30);
 
 
 	}
@@ -212,8 +212,15 @@ void Gestor::press(unsigned char key) {
 	}
 	else if (estado == JUEGO)
 		mundo.teclado.press(key);
-	
+	else if (estado == GAMEOVER) {
+		//if (key == 8)//LF para salto de línea
+		//	holagente.Name.pop_back(); //SEGURIDADDDDDDD
+		//else
+		//	holagente.Name.push_back(key);
+		
+	}
 }
+
 void Gestor::unpress(unsigned char key) {
 	if (estado == JUEGO)
 		mundo.teclado.unpress(key);

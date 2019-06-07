@@ -8,7 +8,7 @@
 #include "ETSIDI.h"
 #include "glut.h"
 
-Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60){
+Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60), time1(0), time2(0){
 	;
 }
 
@@ -55,11 +55,7 @@ void Mundo::Mueve(float t)
 	
 	//CREACIÓN DE OBJETOS	
 	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, new Asteroide(GV::R_Asteroide));
-
-	static float time1 = 0;
 	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, new Nave_mala(), time1);
-
-	static float time2 = 0;
 	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave_elite, new Nave_elite(), time2);
 
 	LG::Naves_disparan(naves_enemigas, disparo_bad, t);
@@ -71,15 +67,6 @@ void Mundo::Mueve(float t)
 	disparo_good.Mueve(t);
 	disparo_bad.Mueve(t);
 	asteroids.Mueve(t);
-
-	//
-	/*prueba.Mueve(t);
-	static float ggwp = 0;
-	ggwp += t;
-	if (ggwp > 1) {
-		prueba.Dispara(disparo_bad, 155, 155, 155);
-		ggwp = 0;
-	}*/
 
 	//Interacciones
 	Interacciones(t);
@@ -111,6 +98,8 @@ void Mundo::Inicializa()
 
 	nave.SetPos(40, 30);
 	nave.SetHP(GV::HP_Inicial);
+	time1 = 0;
+	time2 = 0;
 
 
 }
