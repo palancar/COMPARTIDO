@@ -36,7 +36,7 @@ public:
 	void Interacciones(float t);
 	void SumaPuntos(int p) { Puntos += p; }
 	int GetHP() { return nave.GetHP(); }
-	void SetPuntos() { Puntos = 0; }
+	void ResetPuntos() { Puntos = 0; }
 	int GetPuntos() { return Puntos; }
 
 

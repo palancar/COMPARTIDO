@@ -100,6 +100,7 @@ void Mundo::Inicializa()
 	nave.SetHP(GV::HP_Inicial);
 	time1 = 0;
 	time2 = 0;
+	ResetPuntos();
 
 
 }

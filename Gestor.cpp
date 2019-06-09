@@ -1,7 +1,11 @@
 #include "Gestor.h"
 
-//hola
 using namespace std;
+
+Gestor::Gestor() {
+	estado = INICIO;
+}
+
 void Gestor::Dibuja() {
 
 	if (estado == INICIO||estado==OPCION1 || estado == OPCION2 || estado == OPCION3 || estado == OPCION4) {
@@ -81,9 +85,9 @@ void Gestor::Dibuja() {
 		char txt[100];
 		snprintf(txt, 100, "VIDAS: %d", HP); //en serio, printf ??? Jajaja
 
-		Puntos = mundo.GetPuntos();
+		actual_player.Puntos = mundo.GetPuntos();
 		char TXT[100];
-		snprintf(TXT, 100, "PUNTOS: %d", Puntos);
+		snprintf(TXT, 100, "PUNTOS: %d", actual_player.Puntos);
 
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 20);
@@ -91,13 +95,15 @@ void Gestor::Dibuja() {
 		ETSIDI::printxy(TXT, 10, 55);
 
 
-
 		if (HP == 0) {
-			estado=GAMEOVER;
+			estado = GAMEOVER;
 			ETSIDI::play("COMPARTIDO/sonidos/GAMEOVER.mp3");
+			actual_player.Name = "";
 			//mundo.Inicializa(); //innecesario, ¿no?
 		}
+
 	}
+
 	else if (estado == INSTRUCCIONES) {
 		gluLookAt(40, 30, GV::Distancia,  // posicion del ojo
 			40, 30, 0,      // hacia que punto mira  
@@ -139,20 +145,18 @@ void Gestor::Dibuja() {
 
 		//////////////////////////
 
-		ETSIDI::printxy(holagente.Name.c_str(), 7, 30);
+		ETSIDI::printxy(actual_player.Name.c_str(), 7, 30);
 
 
 	}
+
 }
 
 void Gestor::Mueve(float t) {
 	if (estado ==JUEGO)
 		mundo.Mueve(t);
-}
 
-Gestor::Gestor() {
-	estado = INICIO;
-
+	
 }
 
 void Gestor::Mouse(int x, int y) {
@@ -179,7 +183,6 @@ void Gestor::MouseClick(int b, int state) {
 	else if(b == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {		//hacer click en las opciones te lleva a las distintos menus
 		if (estado == OPCION1) {
 			mundo.Inicializa();
-			mundo.SetPuntos();
 			estado = JUEGO;
 		
 		}
@@ -189,6 +192,7 @@ void Gestor::MouseClick(int b, int state) {
 			estado = PUNTUACIONES;
 		else if (estado == OPCION4) {
 			estado = SALIR;
+			players.toFile("COMPARTIDO/boxscore.txt");
 			glutDestroyWindow(1);		//ESTO ESTA MUY FEO. HAY QUE HACER EN EL GLUT:
 			/*
 			cuando se crea la ventana:
@@ -205,7 +209,7 @@ void Gestor::press(unsigned char key) {
 	else if ((key == 'p' || key == 'P') && estado == PAUSA) {
 		estado = JUEGO;
 		ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
-	}
+	} //key 27 = escape
 	else if (key == 27 && (estado == PAUSA || estado == INSTRUCCIONES || estado == PUNTUACIONES || estado == GAMEOVER)) {
 		ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
 		estado = INICIO;
@@ -213,10 +217,19 @@ void Gestor::press(unsigned char key) {
 	else if (estado == JUEGO)
 		mundo.teclado.press(key);
 	else if (estado == GAMEOVER) {
-		//if (key == 8)//LF para salto de línea
-		//	holagente.Name.pop_back(); //SEGURIDADDDDDDD
-		//else
-		//	holagente.Name.push_back(key);
+		if (key == 8) { //BackSlash(
+			if (actual_player.Name.size() > 0)
+				actual_player.Name.pop_back();
+		}
+		else if (key == 13) { //Enter
+			players.agregar(actual_player);
+			players.ordenar();
+			ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
+			players.toFile("COMPARTIDO/boxscore.txt");
+			estado = INICIO;
+		}
+		else 
+			actual_player.Name.push_back(key);
 		
 	}
 }
@@ -225,6 +238,12 @@ void Gestor::unpress(unsigned char key) {
 	if (estado == JUEGO)
 		mundo.teclado.unpress(key);
 }
+
 void Gestor::SetAuxTi(float aux) {
 	auxTitulo = aux;
+}
+
+void Gestor::Inicializa(){
+	mundo.Inicializa();
+	players.fromFile("COMPARTIDO/boxscore.txt");
 }
