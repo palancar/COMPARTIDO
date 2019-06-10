@@ -87,6 +87,7 @@ void Mundo::Interacciones(float t) {
 	CQ::rebote_lista(naves_enemigas);
 	CQ::choque_lista(disparo_bad, nave);
 }
+
 void Mundo::Inicializa()
 {
 	naves_enemigas.Vaciar();
@@ -108,7 +109,6 @@ void Mundo::Inicializa()
 void Mundo::Tecla() {//CAMBIAR ESTO PLZ
 	nave.Tecla(teclado);
 }
-
 
 void Mundo::Mouse(int x, int y) {
 	Vector2D ratonp(x / 10, 60 - y / 10);

@@ -2,6 +2,17 @@
 
 using namespace std;
 
+bool valid_char(char& key) {
+	if (key >= '0' && key <= '9') return true;
+	if (key >= 'A' && key <= 'Z') return true;
+	if (key >= 'a' && key <= 'z') { 
+		key += 'A' - 'a'; //lo pasa a mayúsculas
+		return true;
+	}
+	if (key == '_' || key == '-') return true;
+	return false;
+}
+
 Gestor::Gestor() {
 	estado = INICIO;
 }
@@ -95,12 +106,6 @@ void Gestor::Dibuja() {
 		ETSIDI::printxy(TXT, 10, 55);
 
 
-		if (HP == 0) {
-			estado = GAMEOVER;
-			ETSIDI::play("COMPARTIDO/sonidos/GAMEOVER.mp3");
-			actual_player.Name = "";
-			//mundo.Inicializa(); //innecesario, ¿no?
-		}
 
 	}
 
@@ -156,7 +161,13 @@ void Gestor::Mueve(float t) {
 	if (estado ==JUEGO)
 		mundo.Mueve(t);
 
-	
+
+	if (estado == JUEGO && HP == 0) {
+		estado = GAMEOVER;
+		ETSIDI::play("COMPARTIDO/sonidos/GAMEOVER.mp3");
+		actual_player.Name = "";
+		//mundo.Inicializa(); //innecesario, ¿no?
+	}//lo he quitado del Dibuja porque no tenía mucho sentido que estuviera ahí
 }
 
 void Gestor::Mouse(int x, int y) {
@@ -217,6 +228,7 @@ void Gestor::press(unsigned char key) {
 	else if (estado == JUEGO)
 		mundo.teclado.press(key);
 	else if (estado == GAMEOVER) {
+		char aux_key = key;
 		if (key == 8) { //BackSlash(
 			if (actual_player.Name.size() > 0)
 				actual_player.Name.pop_back();
@@ -228,8 +240,8 @@ void Gestor::press(unsigned char key) {
 			players.toFile("COMPARTIDO/boxscore.txt");
 			estado = INICIO;
 		}
-		else 
-			actual_player.Name.push_back(key);
+		else if (valid_char(aux_key)) //comprueba si es válida la tecla introducida y la pasa a mayúsculas si es necesario
+			actual_player.Name.push_back(aux_key);
 		
 	}
 }

@@ -3,8 +3,9 @@
 
 void ListaPlayer::agregar(Player& p) {
 	for (int i = 0; i < size(); i++) {
-		if (at(i).Name == p.Name && p.Puntos > at(i).Puntos) { //at equivale a [i]
-			at(i) = p;
+		if (at(i).Name == p.Name) { //at equivale a [i]
+			if (p.Puntos > at(i).Puntos)
+				at(i) = p;
 			return;
 		}
 	}
@@ -29,10 +30,17 @@ void ListaPlayer::ordenar() {
 void ListaPlayer::toFile(string file) {
 	ofstream fs;
 	fs.open(file, ios::out);
+	if (fs.fail()) {
+		fs.close();
+		return;
+	}
 	fs << size() << endl;
+	if (fs.fail()) {
+		fs.close();
+		return;
+	}
 	for (int i = 0; i < size(); i++) {
-		fs << at(i).Puntos << endl;
-		fs << at(i).Name << endl;
+		fs << at(i).Puntos << " " << at(i).Name << endl;
 	}
 	fs.close();
 }
@@ -46,8 +54,8 @@ void ListaPlayer::fromFile(string file) {
 	fs >> s;
 	
 	for (int i = 0; i < s; i++) {
-		fs >> jugador.Puntos;
-		fs >> jugador.Name;
+		if (fs.eof()) break;
+		fs >> jugador.Puntos >> jugador.Name;
 		agregar(jugador);
 	}
 	fs.close();
