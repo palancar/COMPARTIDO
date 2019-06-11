@@ -182,7 +182,7 @@ void Gestor::Mueve(float t) {
 		ETSIDI::play("COMPARTIDO/sonidos/GAMEOVER.mp3");
 		actual_player.Name = "";
 		actual_player.Name.shrink_to_fit();
-		//mundo.Inicializa(); //innecesario, ¿no?
+		mundo.Inicializa(); //se deja aquí porque hay problemas
 	}//lo he quitado del Dibuja porque no tenía mucho sentido que estuviera ahí
 }
 
@@ -287,6 +287,7 @@ void Gestor::Inicializa(){
 	vidas = mundo.GetHP();
 	AuxPuntos = 2000;	//puntos a partir de los cuales empieza asubir la dificultad
 	players.fromFile("COMPARTIDO/boxscore.txt");
+	estado = INICIO;
 }
 
 void Gestor::DibujaFondo() {

@@ -5,7 +5,7 @@ void Disparo::Dibuja() {
 	glPushMatrix();
 	glColor3ub(r, g, b);
 	glTranslatef(pos.x, pos.y, 1);
-	glutSolidSphere(radio, 100, 100);
+	glutSolidSphere(radio, 20, 20);
 	glPopMatrix();
 
 }
