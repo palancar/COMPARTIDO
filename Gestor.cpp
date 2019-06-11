@@ -167,7 +167,7 @@ void Gestor::Mueve(float t) {
 		ETSIDI::play("COMPARTIDO/sonidos/GAMEOVER.mp3");
 		actual_player.Name = "";
 		actual_player.Name.shrink_to_fit();
-		//mundo.Inicializa(); //innecesario, ¿no?
+		mundo.Inicializa(); //se deja aquí porque hay problemas
 	}//lo he quitado del Dibuja porque no tenía mucho sentido que estuviera ahí
 }
 
@@ -259,4 +259,5 @@ void Gestor::SetAuxTi(float aux) {
 void Gestor::Inicializa(){
 	mundo.Inicializa();
 	players.fromFile("COMPARTIDO/boxscore.txt");
+	estado = INICIO;
 }

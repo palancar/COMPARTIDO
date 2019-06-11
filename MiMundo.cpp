@@ -57,9 +57,9 @@ void Mundo::Mueve(float t)
 	
 	
 	//CREACIÓN DE OBJETOS	
-	//LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, new Asteroide(GV::R_Asteroide));
-	//LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, new Nave_mala(), time1);
-	//LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave_elite, new Nave_elite(), time2);
+	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, new Asteroide(GV::R_Asteroide));
+	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, new Nave_mala(), time1);
+	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave_elite, new Nave_elite(), time2);
 
 	LG::Naves_disparan(naves_enemigas, disparo_bad, t);
 	LG::Naves_apuntan(naves_enemigas, nave);
@@ -114,7 +114,7 @@ void Mundo::Inicializa()
 
 	///QUITAR ESTO
 	naves_enemigas.push_back(new Nave_legendaria()); 
-	naves_enemigas.back()->SetPos(60, 50);
+	//naves_enemigas.back()->SetPos(60, 50);
 
 }
 
