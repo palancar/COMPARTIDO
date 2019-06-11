@@ -45,6 +45,7 @@ void Mundo::Dibuja()
 	disparo_good.Dibuja();
 	disparo_bad.Dibuja();
 	asteroids.Dibuja();
+	vidaBonus.Dibuja();
 
 }
 
@@ -67,6 +68,7 @@ void Mundo::Mueve(float t)
 	disparo_good.Mueve(t);
 	disparo_bad.Mueve(t);
 	asteroids.Mueve(t);
+	vidaBonus.Mueve(t);
 
 	//Interacciones
 	Interacciones(t);
@@ -77,15 +79,16 @@ void Mundo::Interacciones(float t) {
 	Choque::choque_lista(disparo_bad, borde);
 	CQ::rebote(nave, borde);
 	CQ::choque_lista(asteroids, GV::R_Destruccion);
-	CQ::choque_lista(disparo_good, asteroids,Puntos);		//se suman tambien los puntos
+	CQ::choque_lista(disparo_good, asteroids, Puntos, vidaBonus);		//se suman tambien los puntos
 	CQ::choque_lista(disparo_bad, asteroids);
 	CQ::choque_lista(asteroids, nave);
 	CQ::rebote_lista(asteroids);
 	CQ::rebote_lista(naves_enemigas, borde);
 	CQ::rebote_lista(naves_enemigas, asteroids);
-	CQ::choque_lista(disparo_good, naves_enemigas,Puntos); //se suman tambien los puntos
+	CQ::choque_lista(disparo_good, naves_enemigas,Puntos, vidaBonus); //se suman tambien los puntos
 	CQ::rebote_lista(naves_enemigas);
 	CQ::choque_lista(disparo_bad, nave);
+	CQ::choque_lista(vidaBonus, nave);
 }
 
 void Mundo::Inicializa()
@@ -94,6 +97,7 @@ void Mundo::Inicializa()
 	disparo_good.Vaciar();
 	asteroids.Vaciar();
 	disparo_bad.Vaciar();
+	vidaBonus.Vaciar();
 
 	teclado.inicializa();
 

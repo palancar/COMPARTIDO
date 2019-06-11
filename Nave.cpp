@@ -47,4 +47,8 @@ void Nave::operator --() {
 	hp--;
 }
 
+void Nave::operator ++() {
+	hp++;
+}
+
 

@@ -113,15 +113,20 @@ void Choque::choque_lista(lista<Asteroide>& la, float radio) {
 
 }
 
-void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,int &puntos) {
+void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,int &puntos,lista<Vida>& lv) {
 	for (int i = 0; i < ld.size(); i++) {
 		for (int j = 0; j < la.size(); j++) {
 			if (choque(ld[i], la[j])) {
+
 				ld.erase(i);
 				la[j].SetRadio(la[j].GetRadio() - 1.5);
 				ETSIDI::play("COMPARTIDO/sonidos/HIT.wav");
 				puntos += 20;
 				if (la[j].GetRadio() < 1) {
+					if (ETSIDI::lanzaDado(1, 20) == 20) {//probabilidad de 1 / 20 de que salga una vida
+						lv.push_back(new Vida());
+						lv.back()->SetPos((la[i].GetPos()));
+					}
 					la.erase(j);
 					puntos += 20;
 				}
@@ -205,20 +210,25 @@ bool Choque::choque_lista(lista<Disparo>& ld, Nave& n) {
 	for (int i = 0; i < ld.size(); i++) {
 		if (choque(ld[i], n)) {
 			ld.erase(i);
-			n.operator--(); //le resta 1 vida a la nave //no s´´e por qué no funciona solo n--
+			n.operator--(); //le resta 1 vida a la nave //no sé por qué no funciona solo n--
 			return true;
 		}
 	}
 	return false;
 }
 
-void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, int &puntos) {
+void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, int &puntos, lista<Vida>& lv) {
 	for (int i = 0; i < ln.size(); i++) {
 		if (choque_lista(ld, ln[i])) {
 			if (ln[i].GetHP() <= 0) {
 				puntos += ln[i].puntos;
+				if (ETSIDI::lanzaDado(1, 10) == 10) {//probabilidad de 1 / 10 de que salga una vida
+					lv.push_back(new Vida());
+					lv.back()->SetPos((ln[i].GetPos()));
+				}
 				ln.erase(i);
 				ETSIDI::play("COMPARTIDO/sonidos/ExploNave.wav");
+				
 
 				break;
 			}
@@ -226,3 +236,11 @@ void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, int &puntos)
 	}
 }
 
+void Choque::choque_lista(lista<Vida>& lv, Nave& n) {
+	for (int i = 0; i < lv.size(); i++) {
+		if (choque(lv[i], n)) {
+			lv.erase(i);
+			n.operator++(); //le suma 1 vida a la nave
+		}
+	}
+}

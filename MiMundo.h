@@ -11,6 +11,7 @@
 #include "Choque.h"
 #include "GlobalVar.h"
 #include "Nave_elite.h"
+#include "Vida.h"
 
 
 class Mundo{
@@ -46,5 +47,6 @@ public:
 	lista<Disparo> disparo_bad;
 	lista<Asteroide> asteroids;
 	lista<Nave_mala> naves_enemigas;
+	lista<Vida> vidaBonus;
 	Teclado teclado;
 };

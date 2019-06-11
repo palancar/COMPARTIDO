@@ -12,7 +12,7 @@ void Nave_mala::GoTo( Vector2D v) {
 
 void Nave_mala::Dispara(lista<Disparo> &dis, unsigned char r, unsigned char g, unsigned char b) {
 	float old_point = point;
-	point += ETSIDI::lanzaDado(-PI / 8, PI / 8);
+	point += ETSIDI::lanzaDado(-PI / 8, PI / 8);//desvía ligeramente los disparos
 	Nave::Dispara(dis, r, g, b);
 	point = old_point;
 }

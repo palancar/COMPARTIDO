@@ -162,10 +162,11 @@ void Gestor::Mueve(float t) {
 		mundo.Mueve(t);
 
 
-	if (estado == JUEGO && HP == 0) {
+	if (estado == JUEGO && HP <= 0) {
 		estado = GAMEOVER;
 		ETSIDI::play("COMPARTIDO/sonidos/GAMEOVER.mp3");
 		actual_player.Name = "";
+		actual_player.Name.shrink_to_fit();
 		//mundo.Inicializa(); //innecesario, ¿no?
 	}//lo he quitado del Dibuja porque no tenía mucho sentido que estuviera ahí
 }
