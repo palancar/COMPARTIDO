@@ -5,7 +5,7 @@
 #include "glut.h"
 
 Nave::Nave(int hp, float vel) : point(0), Objeto(2.0, vel), hp(hp) {
-	SetColor(194, 65, 164);
+	SetColor(194, 65, 16);
 }
 
 void Nave::Dibuja() {

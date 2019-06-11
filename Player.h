@@ -7,7 +7,7 @@ using namespace std;
 
 struct Player {
 	string Name;
-	int Puntos;
+	long int Puntos;
 };
 
 class ListaPlayer : public vector<Player> {
