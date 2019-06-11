@@ -22,8 +22,8 @@ class Mundo{
 
 	float time1;//necesarios por ciertos motivos relacionados con la generación de naves
 	float time2;
+	float time3;
 public:
-
 	Mundo();
 	~Mundo() { ; }
 

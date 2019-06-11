@@ -17,13 +17,18 @@ int GV::HP_Inicial = 3;
 int GV::HP_Nave_Enemiga = 3;
 float GV::T_Disparo_NaveEnemiga = 1.24;
 float GV::T_Ciclo_Asteroides = 1.75;
-float GV::T_Ciclo_Nave = 10.0;
+float GV::T_Ciclo_Nave = 10.2;
+float GV::T_Ciclo_Nave_elite = 28.3;
 float GV::R_Asteroide = 5.0;
 float GV::V_Nave_elite = 5;
 float GV::HP_Nave_elite = 10;
 float GV::V_Disparo_elite = 30.0;
 float GV::T_Disparo_Nave_elite = 0.9;
-float GV::T_Ciclo_Nave_elite = 14.75;
+
+
+float GV::T_Ciclo_Nave_Legendaria = 190.5; //la nave legendaria aparece tras 3 minutos???
+int GV::HP_Nave_legendaria = 100;
+float GV::T_Disparo_Nave_Legendaria = 3.0;
 
 
 

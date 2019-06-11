@@ -4,7 +4,7 @@
 
 Disparo_acelerado::Disparo_acelerado() {
 	SetV_Nominal(GV::V_Disparos);
-	SetRadio(4.5);
+	SetRadio(4);
 }
 
 

@@ -5,10 +5,10 @@
 #include "glut.h"
 
 Nave_legendaria::Nave_legendaria() : dispt (RAFAGA), cuenta_disparos(0), pulso(false) {
-	SetV_Nominal(GV::V_Nave_elite);
-	SetHP(100);
+	SetV_Nominal(GV::V_Nave_elite); //se mueve a la misma velocidad que una nave de élite
+	SetHP(GV::HP_Nave_legendaria = 100);
 	SetRadio(6);
-	Cycle_time = 3;
+	Cycle_time = GV::T_Disparo_Nave_Legendaria;
 	//192, 192, 192 plata
 	//239, 184, 16 dorado
 	//207, 18, 32 lava
@@ -17,14 +17,13 @@ Nave_legendaria::Nave_legendaria() : dispt (RAFAGA), cuenta_disparos(0), pulso(f
 }
 
 void Nave_legendaria::Dibuja() {
-	//el cono / disparador
 
 	glPushMatrix();
 	glTranslatef(pos.x, pos.y, 1);
 
-	glPushMatrix();
+	glPushMatrix(); //toroide de arriba
 	glTranslatef(0, 0, 2);
-	glColor3ub(192, 192, 192); //toroide de arriba
+	glColor3ub(192, 192, 192);
 	glutSolidTorus(1, radio - 1, 30, 30);
 	glPopMatrix();
 
@@ -67,7 +66,7 @@ void Nave_legendaria::Dibuja() {
 			glPushMatrix();
 			glTranslatef(1.5*cos(PI * j / 4), 1.5*sin(PI * j / 4), 0);
 			if (i == 0) 
-				glutSolidCone(0.3, 3, 10, 10); //pinchos
+				glutSolidCone(0.3, 3, 10, 10); //pinchos de los toroides
 			else
 				glutSolidCone(0.3, 2, 10, 10);
 			glPopMatrix();
@@ -86,11 +85,11 @@ void Nave_legendaria::Dispara(lista<Disparo> &dis, unsigned char r, unsigned cha
 				dis.back()->SetColor(r, g, b);
 
 				//Lo mismo de siempre
-				dis.back()->SetPos(pos + Vector2D().fromArgMod(point + PI * i / 4, radio));
-				dis.back()->SetVel(Vector2D().fromArgMod(point + PI * i / 4, dis.back()->GetV_Nominal()));
+				dis.back()->SetPos(pos + Vector2D().fromArgMod(point + PI * i / 3.5, radio));
+				dis.back()->SetVel(Vector2D().fromArgMod(point + PI * i / 3.5, dis.back()->GetV_Nominal()));
 			}
 			if (cuenta_disparos == 7) {
-				Cycle_time = 3;
+				Cycle_time = GV::T_Disparo_Nave_Legendaria;
 				cuenta_disparos = 0;
 				dispt = ELITE;
 			}
@@ -111,7 +110,7 @@ void Nave_legendaria::Dispara(lista<Disparo> &dis, unsigned char r, unsigned cha
 				dis.back()->SetVel(Vector2D().fromArgMod(point + PI * i / 4, dis.back()->GetV_Nominal()));
 			}
 			if (cuenta_disparos == 2) {
-				Cycle_time = 3;
+				Cycle_time = GV::T_Disparo_Nave_Legendaria;
 				cuenta_disparos = 0;
 				dispt = ACELERADO;
 			}

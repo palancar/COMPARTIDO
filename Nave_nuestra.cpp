@@ -4,10 +4,11 @@
 
 
 Nave_nuestra::Nave_nuestra() :Nave(GV::HP_Inicial, GV::V_Nave) {
-	SetPos(40, 30); //el centro 
-	SetHP(GV::HP_Inicial);
-	SetColor(205, 215, 200);
-	SetV_Nominal(GV::V_Nave);
+
+	//Si por cualquier casual la nave de repente se volviera blanca, es porque este constructor ha
+	//dejado de funcionar, cambiar todo lo de dentro por un solo SetColor(255, 215, 0);
+	SetColor(255, 215, 0);
+	//
 
 }
 
