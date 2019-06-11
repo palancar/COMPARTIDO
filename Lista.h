@@ -1,13 +1,16 @@
 #pragma once
 #include <vector>
 
-//Simplemente es la clase vector<...> de siempre, pero con otro nombre y dos funciones más
+//Simplemente es la clase vector<...> de siempre, pero con otro nombre, referida a punteros y
+//con alguna función más, aparte de la sobrecarga ¿polimórfica? de erase o [ ]
 
-template <class T> class lista : public std::vector<T> {
+template <class T> class lista : public std::vector<T*> {
 public:
 	void Dibuja();
 	void Mueve(float t);
 	void erase(unsigned int pos);
+	T& operator [](int pos);
+	void Vaciar();
 };
 
 template <class T> void lista<T>::Dibuja() {
@@ -21,7 +24,19 @@ template <class T> void lista<T>::Mueve(float t) {
 }
 
 template <class T> void lista<T>::erase(unsigned int pos) {
+	delete this->vector::operator[] (pos);
 	this->vector::erase(this->begin() + pos);
 	this->shrink_to_fit();
 }
 
+template <class T> T& lista<T>::operator [](int pos) {
+	return *this->vector::operator[] (pos); //no te retorna el puntero, sino lo de dentor del puntero
+}
+
+template <class T> void lista<T>::Vaciar() {
+	for (int i = 0; i < this->size(); i++) {
+		delete this->vector::operator[] (i);
+	}
+	this->vector::resize(0);
+	this->vector::shrink_to_fit();
+}

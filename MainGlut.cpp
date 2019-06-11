@@ -6,16 +6,26 @@
 Gestor gestor;
 
 //VARIABLES GLOBALES
-const int GV::N_Disparos = 10;
-const float GV::V_Disparos = 40.0;
-const float GV::V_Asteroides = 15;
-const float GV::V_Nave = 20.0;
-const float GV::Distancia = 82.5;
-const float GV::R_Generacion = 55.0;
-const float GV::R_Destruccion = 65.0;
-const int GV::HP_Inicial = 3;
-const int GV::HP_Nave_Enemiga = 5;
-const float GV::T_Disparo_NaveEnemiga = 0.9;
+float GV::Distancia = 82.5;
+float GV::R_Generacion = 55.0;
+float GV::R_Destruccion = 65.0;
+float GV::V_Disparos = 40.0;
+float GV::V_Nave = 20.0;
+float GV::V_Nave_Mala = 9.0;
+float GV::V_Asteroides = 15.0;
+int GV::HP_Inicial = 3;
+int GV::HP_Nave_Enemiga = 3;
+float GV::T_Disparo_NaveEnemiga = 1.24;
+float GV::T_Ciclo_Asteroides = 1.75;
+float GV::T_Ciclo_Nave = 10.0;
+float GV::R_Asteroide = 5.0;
+float GV::V_Nave_elite = 5;
+float GV::HP_Nave_elite = 10;
+float GV::V_Disparo_elite = 30.0;
+float GV::T_Disparo_Nave_elite = 0.9;
+float GV::T_Ciclo_Nave_elite = 14.75;
+
+
 
 //los callback, funciones que seran llamadas automaticamente por la glut
 //cuando sucedan eventos
@@ -61,7 +71,7 @@ int main(int argc, char* argv[]) {
 	glutKeyboardUpFunc(OnRelease); //al dejar de pulsar la tecla
 	glutIdleFunc(OnIdle);//cuando no se hace nada
 
-
+	ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
 	gestor.Inicializa();
 
 	//pasarle el control a GLUT,que llamara a los callbacks

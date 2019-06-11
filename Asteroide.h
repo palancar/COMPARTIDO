@@ -5,6 +5,7 @@
 class Asteroide : public Objeto {
 public:
 	Asteroide();
+	Asteroide(float R);
 	~Asteroide() { ; }
 	void Dibuja();
 };

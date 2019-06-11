@@ -11,4 +11,3 @@ public:
 
 	void Dibuja();
 };
-//mecagoentuvidacompañero

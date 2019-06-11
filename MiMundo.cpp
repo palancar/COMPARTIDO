@@ -3,10 +3,12 @@
 #include <math.h>
 #include "GlobalVar.h"
 #include "Asteroide.h"
+#include "Nave_elite.h"
+#include "Loop_Generator.h"
+#include "ETSIDI.h"
 #include "glut.h"
 
-Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60),
-generator(std::chrono::system_clock::now().time_since_epoch().count()), circulo(-PI, PI), cuartocirculo(-PI / 4, PI / 4) {
+Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60), time1(0), time2(0){
 	;
 }
 
@@ -33,24 +35,32 @@ void Mundo::Dibuja()
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 
+	
+
+
+
 	borde.Dibuja();
 	nave.Dibuja();
 	naves_enemigas.Dibuja();
 	disparo_good.Dibuja();
 	disparo_bad.Dibuja();
 	asteroids.Dibuja();
+	vidaBonus.Dibuja();
+
 }
 
 void Mundo::Mueve(float t)
 {
-	//Gestión de los tiempos incrementales
-
-
-
 	nave.PointTo((nave.GetXYpoint() - nave.GetPos()).argumento());//la nave apunta a donde debe)
-	naves_enemigas.back().PointTo((nave.GetPos() - naves_enemigas.back().GetPos()).argumento());//las naves enemigas te apuntan
-	//se crean cosas
-	Crear_asteroides(t, 2);
+	
+	
+	//CREACIÓN DE OBJETOS	
+	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, new Asteroide(GV::R_Asteroide));
+	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, new Nave_mala(), time1);
+	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave_elite, new Nave_elite(), time2);
+
+	LG::Naves_disparan(naves_enemigas, disparo_bad, t);
+	LG::Naves_apuntan(naves_enemigas, nave);
 
 	//cosas se mueven
 	nave.Mueve(t);
@@ -58,33 +68,51 @@ void Mundo::Mueve(float t)
 	disparo_good.Mueve(t);
 	disparo_bad.Mueve(t);
 	asteroids.Mueve(t);
+	vidaBonus.Mueve(t);
 
 	//Interacciones
 	Interacciones(t);
 }
 
 void Mundo::Interacciones(float t) {
-	Choque::choque_disparos(disparo_good, borde); //CQ es nuestra particular abreviatura de Choque
-	Choque::choque_disparos(disparo_bad, borde);
-	CQ::choque_borde(nave, borde);
-	CQ::choque_asteroides(asteroids, GV::R_Destruccion);
-	CQ::choque_disparos_asteroides(disparo_good, asteroids);
-	CQ::choque_asteroides_nave(asteroids, nave);
-	CQ::rebote(asteroids);
-
-	CQ::nave_dispara(naves_enemigas, disparo_bad, t);
-
+	Choque::choque_lista(disparo_good, borde); //CQ es nuestra particular abreviatura de Choque
+	Choque::choque_lista(disparo_bad, borde);
+	CQ::rebote(nave, borde);
+	CQ::choque_lista(asteroids, GV::R_Destruccion);
+	CQ::choque_lista(disparo_good, asteroids, Puntos, vidaBonus);		//se suman tambien los puntos
+	CQ::choque_lista(disparo_bad, asteroids);
+	CQ::choque_lista(asteroids, nave);
+	CQ::rebote_lista(asteroids);
+	CQ::rebote_lista(naves_enemigas, borde);
+	CQ::rebote_lista(naves_enemigas, asteroids);
+	CQ::choque_lista(disparo_good, naves_enemigas,Puntos, vidaBonus); //se suman tambien los puntos
+	CQ::rebote_lista(naves_enemigas);
+	CQ::choque_lista(disparo_bad, nave);
+	CQ::choque_lista(vidaBonus, nave);
 }
+
 void Mundo::Inicializa()
 {
-	naves_enemigas.push_back(Nave());
-	naves_enemigas.back().SetPos(60, 45);
+	naves_enemigas.Vaciar();
+	disparo_good.Vaciar();
+	asteroids.Vaciar();
+	disparo_bad.Vaciar();
+	vidaBonus.Vaciar();
+
+	teclado.inicializa();
+
+	nave.SetPos(40, 30);
+	nave.SetHP(GV::HP_Inicial);
+	time1 = 0;
+	time2 = 0;
+	ResetPuntos();
+
+
 }
 
 void Mundo::Tecla() {//CAMBIAR ESTO PLZ
 	nave.Tecla(teclado);
 }
-
 
 void Mundo::Mouse(int x, int y) {
 	Vector2D ratonp(x / 10, 60 - y / 10);
@@ -95,16 +123,7 @@ void Mundo::Mouse(int x, int y) {
 void Mundo::MouseClick(int b, int state) {
 	if (b == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		nave.Dispara(disparo_good, 0, 176, 246);
+		ETSIDI::play("COMPARTIDO/sonidos/disparo1.mp3");
 	}
 }
 
-void Mundo::Crear_asteroides(float t, float Cycle_time) {
-	static float time = 0;
-	time += t;
-	if (time < Cycle_time) return;
-	float ang = circulo(generator);
-	asteroids.push_back(Asteroide());
-	asteroids.back().SetPos(Vector2D().fromArgMod(ang, GV::R_Generacion) + Vector2D(40, 30));
-	asteroids.back().SetVel(Vector2D().fromArgMod(ang + PI + cuartocirculo(generator), asteroids.back().GetV_Nominal()));
-	time = 0;
-}
