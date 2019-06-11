@@ -11,7 +11,7 @@ public:
 	void Tecla() { mundo.Tecla(); }
 	void Mueve(float t);   
 	void Dibuja();  
-	void Inicializa() { estado = INICIO; }
+	void Inicializa();
 	void MouseClick(int b, int state);
 	void Mouse(int x, int y);
 	void press(unsigned char key);
