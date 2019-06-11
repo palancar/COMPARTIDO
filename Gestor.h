@@ -25,6 +25,7 @@ protected:
 	enum Estado {INICIO, OPCION1,OPCION2,OPCION3,OPCION4,JUEGO,INSTRUCCIONES,PUNTUACIONES,SALIR,PAUSA,GAMEOVER};
 	int HP;
 	//Puntos; //los puntos se hacen iguales a los puntos del jugador jeje
+	
 	Estado estado;
 	Mundo mundo; 
 	int auxTitulo;

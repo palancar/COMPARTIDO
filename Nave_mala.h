@@ -8,7 +8,7 @@ protected:
 	float time;
 	bool dentro;
 	float Cycle_time;
-	int puntos; //puntos recibidos por destruirla
+	long int puntos; //puntos recibidos por destruirla
 public:
 	~Nave_mala() { ; }
 	Nave_mala();

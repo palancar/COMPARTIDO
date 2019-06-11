@@ -113,7 +113,7 @@ void Choque::choque_lista(lista<Asteroide>& la, float radio) {
 
 }
 
-void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,int &puntos,lista<Vida>& lv) {
+void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,long int &puntos,lista<Vida>& lv) {
 	for (int i = 0; i < ld.size(); i++) {
 		for (int j = 0; j < la.size(); j++) {
 			if (choque(ld[i], la[j])) {
@@ -125,7 +125,7 @@ void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,int &puntos,l
 				if (la[j].GetRadio() < 1) {
 					if (ETSIDI::lanzaDado(1, 20) == 20) {//probabilidad de 1 / 20 de que salga una vida
 						lv.push_back(new Vida());
-						lv.back()->SetPos((la[i].GetPos()));
+						lv.back()->SetPos((la[j].GetPos()));
 					}
 					la.erase(j);
 					puntos += 20;
@@ -206,6 +206,13 @@ void Choque::rebote_lista(lista<Nave_mala>& ln) {
 	}
 }
 
+void Choque::rebote_lista(lista<Nave_mala>& ln, Nave& n) {
+	for (int i = 0; i < ln.size(); i++) {
+		if (rebote(ln[i], n))
+			ln[i].GoTo(ETSIDI::lanzaDado(0.0, 80.0), ETSIDI::lanzaDado(0.0, 60.0));
+	}
+}
+
 bool Choque::choque_lista(lista<Disparo>& ld, Nave& n) {
 	for (int i = 0; i < ld.size(); i++) {
 		if (choque(ld[i], n)) {
@@ -217,7 +224,7 @@ bool Choque::choque_lista(lista<Disparo>& ld, Nave& n) {
 	return false;
 }
 
-void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, int &puntos, lista<Vida>& lv) {
+void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, long int &puntos, lista<Vida>& lv) {
 	for (int i = 0; i < ln.size(); i++) {
 		if (choque_lista(ld, ln[i])) {
 			if (ln[i].GetHP() <= 0) {

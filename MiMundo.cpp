@@ -4,9 +4,11 @@
 #include "GlobalVar.h"
 #include "Asteroide.h"
 #include "Nave_elite.h"
+#include "Nave_legendaria.h"
 #include "Loop_Generator.h"
 #include "ETSIDI.h"
 #include "glut.h"
+
 
 Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60), time1(0), time2(0){
 	;
@@ -55,9 +57,9 @@ void Mundo::Mueve(float t)
 	
 	
 	//CREACIÓN DE OBJETOS	
-	LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, new Asteroide(GV::R_Asteroide));
-	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, new Nave_mala(), time1);
-	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave_elite, new Nave_elite(), time2);
+	//LG::Crear_asteroides(asteroids, t, GV::T_Ciclo_Asteroides, new Asteroide(GV::R_Asteroide));
+	//LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave, new Nave_mala(), time1);
+	//LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave_elite, new Nave_elite(), time2);
 
 	LG::Naves_disparan(naves_enemigas, disparo_bad, t);
 	LG::Naves_apuntan(naves_enemigas, nave);
@@ -89,6 +91,9 @@ void Mundo::Interacciones(float t) {
 	CQ::rebote_lista(naves_enemigas);
 	CQ::choque_lista(disparo_bad, nave);
 	CQ::choque_lista(vidaBonus, nave);
+
+	//COSAS NUEVAS//
+	CQ::rebote_lista(naves_enemigas, nave);
 }
 
 void Mundo::Inicializa()
@@ -107,6 +112,9 @@ void Mundo::Inicializa()
 	time2 = 0;
 	ResetPuntos();
 
+	///QUITAR ESTO
+	naves_enemigas.push_back(new Nave_legendaria()); 
+	naves_enemigas.back()->SetPos(60, 50);
 
 }
 
