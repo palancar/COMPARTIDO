@@ -13,6 +13,10 @@ bool Choque::dentro(Vector2D pos, Borde& b) {
 	return true;
 }
 
+
+
+
+
 bool Choque::dentro(Vector2D pos, float radio) {
 	pos.x -= 40; //para centrarlo
 	pos.y -= 30;
@@ -96,7 +100,7 @@ bool Choque::rebote(Objeto &o1, Objeto &o2) {
 /*CHOQUES DE LISTAS*/
 
 void Choque::choque_lista(lista<Disparo>& ld, Borde& b) {
-	for (int i = 0; i < ld.size(); i++) {
+	for (unsigned int i = 0; i < ld.size(); i++) {
 		if (!dentro(ld[i].GetPos(), b)) {
 			ld.erase(i);
 		}
@@ -105,7 +109,7 @@ void Choque::choque_lista(lista<Disparo>& ld, Borde& b) {
 }
 
 void Choque::choque_lista(lista<Asteroide>& la, float radio) {
-	for (int i = 0; i < la.size(); i++) {
+	for (unsigned int i = 0; i < la.size(); i++) {
 		if (!dentro(la[i].GetPos(), radio)) {
 			la.erase(i);
 		}
@@ -113,9 +117,9 @@ void Choque::choque_lista(lista<Asteroide>& la, float radio) {
 
 }
 
-void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,int &puntos,lista<Vida>& lv) {
-	for (int i = 0; i < ld.size(); i++) {
-		for (int j = 0; j < la.size(); j++) {
+void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,long int &puntos,lista<Vida>& lv) {
+	for (unsigned int i = 0; i < ld.size(); i++) {
+		for (unsigned int j = 0; j < la.size(); j++) {
 			if (choque(ld[i], la[j])) {
 
 				ld.erase(i);
@@ -125,7 +129,7 @@ void Choque::choque_lista(lista<Disparo>& ld, lista<Asteroide>& la,int &puntos,l
 				if (la[j].GetRadio() < 1) {
 					if (ETSIDI::lanzaDado(1, 20) == 20) {//probabilidad de 1 / 20 de que salga una vida
 						lv.push_back(new Vida());
-						lv.back()->SetPos((la[i].GetPos()));
+						lv.back()->SetPos((la[j].GetPos()));
 					}
 					la.erase(j);
 					puntos += 20;
@@ -157,6 +161,7 @@ void Choque::choque_lista(lista<Asteroide>& la, Nave& n) {
 		if (choque(n, la[i])) {
 			la.erase(i);
 			n.operator --();
+			ETSIDI::play("COMPARTIDO/sonidos/unamenos.wav");
 		}
 	}
 }
@@ -173,6 +178,8 @@ void Choque::rebote_lista(lista<Nave_mala>& ln, Borde& b) {
 	for (int i = 0; i < ln.size(); i++) {
 		if (!ln[i].dentro) {
 			ln[i].dentro = CQ::dentro(ln[i].pos, b);
+			if (ln[i].dentro)
+				ETSIDI::play("COMPARTIDO/sonidos/nuevanave.mp3");  //sonido nave enemiga ha entrado
 		}
 		else {
 			if (rebote(ln[i], b)) {
@@ -211,13 +218,14 @@ bool Choque::choque_lista(lista<Disparo>& ld, Nave& n) {
 		if (choque(ld[i], n)) {
 			ld.erase(i);
 			n.operator--(); //le resta 1 vida a la nave //no sé por qué no funciona solo n--
+			ETSIDI::play("COMPARTIDO/sonidos/golpealenemigo.wav");
 			return true;
 		}
 	}
 	return false;
 }
 
-void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, int &puntos, lista<Vida>& lv) {
+void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, long int &puntos, lista<Vida>& lv) {
 	for (int i = 0; i < ln.size(); i++) {
 		if (choque_lista(ld, ln[i])) {
 			if (ln[i].GetHP() <= 0) {

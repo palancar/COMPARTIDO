@@ -12,14 +12,15 @@ public:
 	void Mueve(float t);   
 	void Dibuja();  
 	void Inicializa();
+	void DibujaFondo();
 	void MouseClick(int b, int state);
 	void Mouse(int x, int y);
 	void press(unsigned char key);
-	void SetAuxTi(float aux);
 	void unpress(unsigned char key);
 	void GoToGameOver() { estado = GAMEOVER; }
 	void GoToPausa() { estado = PAUSA; }
 	void GoToJuego() { estado = JUEGO; }
+	void Dificultad();
 
 protected:  
 	enum Estado {INICIO, OPCION1,OPCION2,OPCION3,OPCION4,JUEGO,INSTRUCCIONES,PUNTUACIONES,SALIR,PAUSA,GAMEOVER};
@@ -27,7 +28,8 @@ protected:
 	//Puntos; //los puntos se hacen iguales a los puntos del jugador jeje
 	Estado estado;
 	Mundo mundo; 
-	int auxTitulo;
+	int vidas;
+	long int AuxPuntos;
 	///////////////////////////
 	Player actual_player;
 	ListaPlayer players;

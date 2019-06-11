@@ -18,7 +18,7 @@ class Mundo{
 	float ojo[3]; //posición del ojo
 	float mira[3]; //punto al que mira
 	float time;
-	int Puntos;
+	long int Puntos;
 
 	float time1;//necesarios por ciertos motivos relacionados con la generación de naves
 	float time2;

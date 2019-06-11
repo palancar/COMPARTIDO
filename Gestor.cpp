@@ -15,32 +15,19 @@ bool valid_char(char& key) {
 
 Gestor::Gestor() {
 	estado = INICIO;
+	mundo.Inicializa();
+	players.fromFile("COMPARTIDO/boxscore.txt");
 }
+
+////////////////////////////////
+////		DIBUJAR			////
+///////////////////////////////
 
 void Gestor::Dibuja() {
 
 	if (estado == INICIO||estado==OPCION1 || estado == OPCION2 || estado == OPCION3 || estado == OPCION4) {
 
-		gluLookAt(40, 30, GV::Distancia,  // posicion del ojo
-			40, 30, 0,      // hacia que punto mira  
-			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
-		glEnable(GL_LIGHTING);
-
-		glEnable(GL_TEXTURE_2D);
-
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("COMPARTIDO/imagenes/superfondo.png").id);
-		glDisable(GL_LIGHTING);
-		glBegin(GL_POLYGON);
-		glColor3f(255, 255,255);
-
-		glTexCoord2d(0, 1);		glVertex3f(-2, -2, -2.1);
-		glTexCoord2d(1, 1);		glVertex3f(82, -2, -2.1);
-		glTexCoord2d(1, 0);		glVertex3f(82, 62, -2.1);
-		glTexCoord2d(0, 0);		glVertex3f(-2, 62, -2.1);
-		glEnd();
-
-		glDisable(GL_LIGHTING);
-		glDisable(GL_TEXTURE_2D);
+		DibujaFondo();
 		//
 		if (estado == OPCION1) { //dibuja cuadraditos de seleccion
 			glColor3b(2, 25, 25);
@@ -93,26 +80,27 @@ void Gestor::Dibuja() {
 	
 		mundo.Dibuja();
 		HP=mundo.GetHP();
+		if (vidas > HP) {			//flanco de bajada en HP
+			ETSIDI::play("COMPARTIDO/sonidos/glass.mp3");
+			vidas = HP;
+		}
+
 		char txt[100];
 		snprintf(txt, 100, "VIDAS: %d", HP); //en serio, printf ??? Jajaja
 
 		actual_player.Puntos = mundo.GetPuntos();
 		char TXT[100];
-		snprintf(TXT, 100, "PUNTOS: %d", actual_player.Puntos);
+		snprintf(TXT, 100, "PUNTOS: %li", actual_player.Puntos);
 
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 20);
 		ETSIDI::printxy(txt, 55, 55);
 		ETSIDI::printxy(TXT, 10, 55);
 
-
-
 	}
 
 	else if (estado == INSTRUCCIONES) {
-		gluLookAt(40, 30, GV::Distancia,  // posicion del ojo
-			40, 30, 0,      // hacia que punto mira  
-			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
+		DibujaFondo();
 
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 44);
@@ -136,26 +124,53 @@ void Gestor::Dibuja() {
 
 	}
 	else if (estado == GAMEOVER) {
-		gluLookAt(40, 30, GV::Distancia,  // posicion del ojo
-			40, 30, 0,      // hacia que punto mira  
-			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
+
+		DibujaFondo();
+
+		char TXT[100];
+		snprintf(TXT, 100, "PUNTOS: %li", actual_player.Puntos);
 
 		ETSIDI::stopMusica();
 		ETSIDI::setTextColor(1, 1, 0);
-		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 50);
-		ETSIDI::printxy("GAME OVER", 20, 50);
-		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 34);
-		ETSIDI::printxy("Pulsa .Esc. para  volver", 9, 10);
-		ETSIDI::printxy("al menu principal", 17, 5);
+		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 55);
+		ETSIDI::printxy("GAME OVER", 17, 50);
+		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 30);
+		ETSIDI::printxy(TXT, 26,42);
+		ETSIDI::printxy("Introduce tu nombre y ", 15, 20);
+		ETSIDI::printxy("pulsa enter para volver", 11, 15);
+		ETSIDI::printxy("al menu de inicio", 22, 10);
 
 		//////////////////////////
 
-		ETSIDI::printxy(actual_player.Name.c_str(), 7, 30);
-
-
+		ETSIDI::printxy(actual_player.Name.c_str(), 20, 30);
 	}
 
+
+	else if (estado == PUNTUACIONES) {
+		DibujaFondo();
+		ETSIDI::setTextColor(1, 1, 0);
+		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 38);
+		ETSIDI::printxy("NOMBRE", 12, 45);
+		ETSIDI::printxy("PUNTOS", 50, 45);
+		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 34);
+		ETSIDI::printxy("Pulsa .Esc. para  volver", 9, 15);
+		ETSIDI::printxy("al menu principal", 17, 12);
+
+		for (int i = 0; i<5; i++) {
+
+			ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 30);
+			char char_array[100]="";
+			//strcpy_s(char_array, players[i].Name.c_str());
+			snprintf(char_array, 100, "%d.  %s:", i+1,players[i].Name.c_str());
+			ETSIDI::printxy(char_array, 10, 40-4*i);
+			snprintf(char_array, 100, "%d", players[i].Puntos);
+			ETSIDI::printxy(char_array, 53, 40 - 4 * i);
+		}
+	}
+
+
 }
+
 
 void Gestor::Mueve(float t) {
 	if (estado ==JUEGO)
@@ -222,10 +237,14 @@ void Gestor::press(unsigned char key) {
 		estado = JUEGO;
 		ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
 	} //key 27 = escape
-	else if (key == 27 && (estado == PAUSA || estado == INSTRUCCIONES || estado == PUNTUACIONES || estado == GAMEOVER)) {
-		ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
+
+	else if (key == 27 && (estado == PAUSA || estado == GAMEOVER)) {
 		estado = INICIO;
+		ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
 	}
+	else if (key == 27 && (estado == INSTRUCCIONES || estado == PUNTUACIONES))
+		estado = INICIO;
+
 	else if (estado == JUEGO)
 		mundo.teclado.press(key);
 	else if (estado == GAMEOVER) {
@@ -241,9 +260,8 @@ void Gestor::press(unsigned char key) {
 			players.toFile("COMPARTIDO/boxscore.txt");
 			estado = INICIO;
 		}
-		else if (valid_char(aux_key)) //comprueba si es válida la tecla introducida y la pasa a mayúsculas si es necesario
+		else if (valid_char(aux_key)&& actual_player.Name.size()<12) //comprueba si es válida la tecla introducida y la pasa a mayúsculas si es necesario
 			actual_player.Name.push_back(aux_key);
-		
 	}
 }
 
@@ -252,11 +270,45 @@ void Gestor::unpress(unsigned char key) {
 		mundo.teclado.unpress(key);
 }
 
-void Gestor::SetAuxTi(float aux) {
-	auxTitulo = aux;
+void Gestor::Dificultad() {
+	if (AuxPuntos < actual_player.Puntos) {
+		GV::T_Disparo_NaveEnemiga -= 0.1;
+		GV::T_Ciclo_Nave -= 0.9;
+		GV::V_Nave_Mala += 0.2;
+		GV::T_Disparo_Nave_elite -= 0.1;
+		GV::V_Asteroides -= 1.0;
+		AuxPuntos += 1000;
+	}
 }
 
 void Gestor::Inicializa(){
+	estado = INICIO;
 	mundo.Inicializa();
+	vidas = mundo.GetHP();
+	AuxPuntos = 2000;	//puntos a partir de los cuales empieza asubir la dificultad
 	players.fromFile("COMPARTIDO/boxscore.txt");
+}
+
+void Gestor::DibujaFondo() {
+
+	gluLookAt(40, 30, GV::Distancia,  // posicion del ojo
+		40, 30, 0,      // hacia que punto mira  
+		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
+	glEnable(GL_LIGHTING);
+
+	glEnable(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("COMPARTIDO/imagenes/superfondo.png").id);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(255, 255, 255);
+
+	glTexCoord2d(0, 1);		glVertex3f(-2, -2, -2.1);
+	glTexCoord2d(1, 1);		glVertex3f(82, -2, -2.1);
+	glTexCoord2d(1, 0);		glVertex3f(82, 62, -2.1);
+	glTexCoord2d(0, 0);		glVertex3f(-2, 62, -2.1);
+	glEnd();
+
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 }
