@@ -124,6 +124,7 @@ void OnTimer(int value)
 	//poner aqui el código de animacion
 	gestor.Mueve(0.025);
 	gestor.Tecla();
+	gestor.Dificultad();
 
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);
