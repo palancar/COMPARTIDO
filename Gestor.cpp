@@ -81,16 +81,16 @@ void Gestor::Dibuja() {
 		mundo.Dibuja();
 		HP=mundo.GetHP();
 		if (vidas > HP) {			//flanco de bajada en HP
-			ETSIDI::play("COMPARTIDO/sonidos/glass.mp3");
+			ETSIDI::play("COMPARTIDO/sonidos/glass.mp3");		//se emite un sonido al perder una vida
 			vidas = HP;
 		}
 
 		char txt[100];
-		snprintf(txt, 100, "VIDAS: %d", HP); //en serio, printf ??? Jajaja
+		snprintf(txt, 100, "VIDAS: %d", HP);  //mostramos las vidas en pantalla
 
 		actual_player.Puntos = mundo.GetPuntos();
 		char TXT[100];
-		snprintf(TXT, 100, "PUNTOS: %li", actual_player.Puntos);
+		snprintf(TXT, 100, "PUNTOS: %li", actual_player.Puntos); //mostramos los puntos en pantalla
 
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 20);
@@ -123,10 +123,16 @@ void Gestor::Dibuja() {
 		ETSIDI::printxy("al menu principal", 17, 18);
 
 	}
+
+	////////////////////////////////
+	////PANTALLA DE GAMEOVER   ////
+	///////////////////////////////
+
+
 	else if (estado == GAMEOVER) {
 
 		DibujaFondo();
-
+	
 		char TXT[100];
 		snprintf(TXT, 100, "PUNTOS: %li", actual_player.Puntos);
 
@@ -135,16 +141,16 @@ void Gestor::Dibuja() {
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 55);
 		ETSIDI::printxy("GAME OVER", 17, 50);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 30);
-		ETSIDI::printxy(TXT, 26,42);
+		ETSIDI::printxy(TXT, 26,42);			//Mostramos los puntos al jugador
 		ETSIDI::printxy("Introduce tu nombre y ", 15, 20);
 		ETSIDI::printxy("pulsa enter para volver", 11, 15);
 		ETSIDI::printxy("al menu de inicio", 22, 10);
-
-		//////////////////////////
-
 		ETSIDI::printxy(actual_player.Name.c_str(), 20, 30);
 	}
 
+	////////////////////////////////
+	////PANTALLA DE PUNTUACIONES////
+	///////////////////////////////
 
 	else if (estado == PUNTUACIONES) {
 		DibujaFondo();
@@ -156,8 +162,9 @@ void Gestor::Dibuja() {
 		ETSIDI::printxy("Pulsa .Esc. para  volver", 9, 15);
 		ETSIDI::printxy("al menu principal", 17, 12);
 
-		for (int i = 0; i<5; i++) {
+		//IMPRIME POR ORDEN LOS MEJORES JUGADORES JUNTO CON SU PUNTUACIÓN
 
+		for (int i = 0; i<5&& i < players.size(); i++) {
 			ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 30);
 			char char_array[100]="";
 			//strcpy_s(char_array, players[i].Name.c_str());
@@ -165,6 +172,7 @@ void Gestor::Dibuja() {
 			ETSIDI::printxy(char_array, 10, 40-4*i);
 			snprintf(char_array, 100, "%d", players[i].Puntos);
 			ETSIDI::printxy(char_array, 53, 40 - 4 * i);
+		
 		}
 	}
 
@@ -177,7 +185,7 @@ void Gestor::Mueve(float t) {
 		mundo.Mueve(t);
 
 
-	if (estado == JUEGO && HP <= 0) {
+	if (estado == JUEGO && HP == 0) {
 		estado = GAMEOVER;
 		ETSIDI::play("COMPARTIDO/sonidos/GAMEOVER.mp3");
 		actual_player.Name = "";
@@ -211,7 +219,6 @@ void Gestor::MouseClick(int b, int state) {
 		if (estado == OPCION1) {
 			mundo.Inicializa();
 			estado = JUEGO;
-		
 		}
 		else if (estado == OPCION2)
 			estado = INSTRUCCIONES;
@@ -220,7 +227,7 @@ void Gestor::MouseClick(int b, int state) {
 		else if (estado == OPCION4) {
 			estado = SALIR;
 			players.toFile("COMPARTIDO/boxscore.txt");
-			glutDestroyWindow(1);		//ESTO ESTA MUY FEO. HAY QUE HACER EN EL GLUT:
+			//glutDestroyWindow(window);		//ESTO ESTA MUY FEO. HAY QUE HACER EN EL GLUT:
 			/*
 			cuando se crea la ventana:
 			int window=glutcreate....
@@ -277,7 +284,7 @@ void Gestor::Dificultad() {
 		GV::V_Nave_Mala += 0.2;
 		GV::T_Disparo_Nave_elite -= 0.1;
 		GV::V_Asteroides -= 1.0;
-		AuxPuntos += 1000;
+		AuxPuntos += 1500;
 	}
 }
 
@@ -287,7 +294,6 @@ void Gestor::Inicializa(){
 	vidas = mundo.GetHP();
 	AuxPuntos = 2000;	//puntos a partir de los cuales empieza asubir la dificultad
 	players.fromFile("COMPARTIDO/boxscore.txt");
-	estado = INICIO;
 }
 
 void Gestor::DibujaFondo() {

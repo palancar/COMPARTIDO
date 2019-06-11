@@ -22,6 +22,7 @@ public:
 	static float T_Ciclo_Nave_elite;
 	static float R_Asteroide;
 	static float V_Asteroides;
+
 	//también se puede chetar la nave legendaria, subiendo la vida por ejemplo
 	static float T_Ciclo_Nave_Legendaria;
 	static int HP_Nave_legendaria;

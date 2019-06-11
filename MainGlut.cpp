@@ -62,8 +62,6 @@ int main(int argc, char* argv[]) {
 	glMatrixMode(GL_PROJECTION);
 	gluPerspective(40.0, 800 / 600.0f, 0.1, 150);
 
-	//Hola
-
 	glutSetCursor(GLUT_CURSOR_FULL_CROSSHAIR);
 	
 	//Registrar los callbacks
@@ -76,9 +74,9 @@ int main(int argc, char* argv[]) {
 	glutKeyboardUpFunc(OnRelease); //al dejar de pulsar la tecla
 	glutIdleFunc(OnIdle);//cuando no se hace nada
 
+
 	ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
 	gestor.Inicializa();
-
 	//pasarle el control a GLUT,que llamara a los callbacks
 	glutMainLoop();
 
@@ -93,7 +91,7 @@ void OnDraw(void)
 	//Para definir el punto de vista
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
+	
 	/*---PRIMITIVAS DE DIBUJO---
 	glutWireSphere( radius,  slices,  stacks);
 	glutSolidSphere(radius,  slices,  stacks);
@@ -130,6 +128,8 @@ void OnTimer(int value)
 	gestor.Mueve(0.025);
 	gestor.Tecla();
 	gestor.Dificultad();
+	if (gestor.Salir())			//cerramos la ventana del juego
+		glutDestroyWindow(glutGetWindow());
 
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);

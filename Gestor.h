@@ -17,6 +17,7 @@ public:
 	void Mouse(int x, int y);
 	void press(unsigned char key);
 	void unpress(unsigned char key);
+	bool Salir() { if (estado == SALIR) return true; return false; }
 	void GoToGameOver() { estado = GAMEOVER; }
 	void GoToPausa() { estado = PAUSA; }
 	void GoToJuego() { estado = JUEGO; }
