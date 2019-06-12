@@ -311,7 +311,6 @@ void Gestor::Dificultad() {
 		AuxPuntos += 4000;
 		
 	}
-	cout << GV::T_Disparo_NaveEnemiga << " ";
 }
 
 void Gestor::Inicializa() {
