@@ -4,7 +4,7 @@
 #include "Lista.h"
 
 
-class Nave :public Objeto { //en principio es nuestra nave
+class Nave :public Objeto { 
 	friend class Loop_Generator;
 protected:
 	float point; //ángulo con el que apunta (en radianes)

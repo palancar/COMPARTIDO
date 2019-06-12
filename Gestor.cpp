@@ -26,7 +26,6 @@ Gestor::Gestor() {
 void Gestor::Dibuja() {
 
 	if (estado == INICIO||estado==OPCION1 || estado == OPCION2 || estado == OPCION3 || estado == OPCION4) {
-		ETSIDI::SpriteSequence("COMPARTIDO/imagenes/explo.png", 4, 4, 1000, true, 10, 20, 3.0F, 3.0F, 1);
 		DibujaFondo();
 		//
 		if (estado == OPCION1) { //dibuja cuadraditos de seleccion
@@ -65,6 +64,8 @@ void Gestor::Dibuja() {
 			glVertex3d(50, 19, -2);
 			glEnd();
 		}
+
+		//OPCIONES DEL MENU
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 44);
 		ETSIDI::printxy("SPACE DESTROYERS", 9, 45);
@@ -73,8 +74,10 @@ void Gestor::Dibuja() {
 		ETSIDI::printxy("INSTRUCCIONES", 20, 30);
 		ETSIDI::printxy("PUNTUACIONES", 20, 25);
 		ETSIDI::printxy("SALIR", 20, 20);
+		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 18);
+		ETSIDI::printxy("PABLO GARCÍA PERIS _53310", 36, 10);
+		ETSIDI::printxy("RAÚL PALANCAR G. _53323", 36, 7);
 		
-
 	}
 	else if (estado == JUEGO) {
 	
@@ -86,18 +89,20 @@ void Gestor::Dibuja() {
 		}
 
 		char txt[100];
-		snprintf(txt, 100, "VIDAS: %d", HP);  //mostramos las vidas en pantalla
+		snprintf(txt, 100, "VIDAS: %d", HP);  
 
 		actual_player.Puntos = mundo.GetPuntos();
 		char TXT[100];
-		snprintf(TXT, 100, "PUNTOS: %li", actual_player.Puntos); //mostramos los puntos en pantalla
+		snprintf(TXT, 100, "PUNTOS: %li", actual_player.Puntos);
 
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 20);
-		ETSIDI::printxy(txt, 55, 55);
-		ETSIDI::printxy(TXT, 10, 55);
+		ETSIDI::printxy(txt, 55, 55);			//mostramos las vidas en pantalla
+		ETSIDI::printxy(TXT, 10, 55);			//mostramos los puntos en pantalla
 
 	}
+	
+	//	INSTRUCCIONES
 
 	else if (estado == INSTRUCCIONES) {
 		DibujaFondo();
@@ -112,6 +117,9 @@ void Gestor::Dibuja() {
 		ETSIDI::printxy("PAUSA EL JUEGO CON LA TECLA 'P'", 5, 17);
 		ETSIDI::printxy("PULSA .ESC. PARA VOLVER AL MENU", 5, 7);
 	}
+
+	//		PAUSA		///
+
 	else if (estado == PAUSA) {
 		ETSIDI::stopMusica();
 		mundo.Dibuja();
@@ -124,33 +132,30 @@ void Gestor::Dibuja() {
 
 	}
 
-	////////////////////////////////
-	////PANTALLA DE GAMEOVER   ////
-	///////////////////////////////
-
-
+	//		PANTALLA DE GAMEOVER   ///
+	
 	else if (estado == GAMEOVER) {
 
 		DibujaFondo();
 	
 		char TXT[100];
-		snprintf(TXT, 100, "PUNTOS: %li", actual_player.Puntos);
+		snprintf(TXT, 100, "PUNTOS: %li", actual_player.Puntos);		
 
 		ETSIDI::stopMusica();
 		ETSIDI::setTextColor(1, 1, 0);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 55);
 		ETSIDI::printxy("GAME OVER", 17, 50);
 		ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 30);
-		ETSIDI::printxy(TXT, 26,42);			//Mostramos los puntos al jugador
+		ETSIDI::printxy(TXT, 26,42);				//Mostramos los puntos al jugador
 		ETSIDI::printxy("Introduce tu nombre y ", 15, 20);
 		ETSIDI::printxy("pulsa enter para volver", 11, 15);
 		ETSIDI::printxy("al menu de inicio", 22, 10);
-		ETSIDI::printxy(actual_player.Name.c_str(), 20, 30);
+		ETSIDI::printxy(actual_player.Name.c_str(), 20, 30);	//Nombre del jugador
 	}
 
-	////////////////////////////////
-	////PANTALLA DE PUNTUACIONES////
-	///////////////////////////////
+
+	//   PUNTUACIONES  ////
+
 
 	else if (estado == PUNTUACIONES) {
 		DibujaFondo();
@@ -164,20 +169,19 @@ void Gestor::Dibuja() {
 
 		//IMPRIME POR ORDEN LOS MEJORES JUGADORES JUNTO CON SU PUNTUACIÓN
 
-		for (int i = 0; i<5&& i < players.size(); i++) {
-			ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 30);
+		for (int i = 0; i<5&& i < players.size(); i++) {		//Los jugadores ya se almcenan ordenados
+			ETSIDI::setFont("COMPARTIDO/fuentes/spaceranger.ttf", 30);		//por lo que solo hay que mostrarlos en orden
 			char char_array[100]="";
-			//strcpy_s(char_array, players[i].Name.c_str());
-			snprintf(char_array, 100, "%d.  %s:", i+1,players[i].Name.c_str());
+
+			snprintf(char_array, 100, "%d.  %s:", i+1,players[i].Name.c_str()); //posicion en el ranking y nombre
 			ETSIDI::printxy(char_array, 10, 40-4*i);
-			snprintf(char_array, 100, "%d", players[i].Puntos);
+			snprintf(char_array, 100, "%d", players[i].Puntos);		//puntos
 			ETSIDI::printxy(char_array, 53, 40 - 4 * i);
 		
 		}
 	}
-
-
 }
+
 
 
 void Gestor::Mueve(float t) {
@@ -190,9 +194,14 @@ void Gestor::Mueve(float t) {
 		ETSIDI::play("COMPARTIDO/sonidos/GAMEOVER.mp3");
 		actual_player.Name = "";
 		actual_player.Name.shrink_to_fit();
-		mundo.Inicializa(); //se deja aquí porque hay problemas
-	}//lo he quitado del Dibuja porque no tenía mucho sentido que estuviera ahí
+		mundo.Inicializa(); //se inicializa el mundo
+	}
 }
+
+
+// GESTIÓN DEL RATON
+
+//Se incluyen tambien los cambios de estado producidos con sus acciones
 
 void Gestor::Mouse(int x, int y) {
 
@@ -212,9 +221,12 @@ void Gestor::Mouse(int x, int y) {
 	}
 }
 
+//Clicks del Raton con sus respectivas acciones y cambios de estado producidos
+
 void Gestor::MouseClick(int b, int state) {
 	if (estado == JUEGO)
-		mundo.MouseClick(b, state);
+		mundo.MouseClick(b, state);		//durante el juego la clase Mundo se ocupa del ratón
+
 	else if(b == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {		//hacer click en las opciones te lleva a las distintos menus
 		if (estado == OPCION1) {
 			mundo.Inicializa();
@@ -225,17 +237,14 @@ void Gestor::MouseClick(int b, int state) {
 		else if (estado == OPCION3)
 			estado = PUNTUACIONES;
 		else if (estado == OPCION4) {
-			estado = SALIR;
-			players.toFile("COMPARTIDO/boxscore.txt");
-			//glutDestroyWindow(window);		//ESTO ESTA MUY FEO. HAY QUE HACER EN EL GLUT:
-			/*
-			cuando se crea la ventana:
-			int window=glutcreate....
-			para luego poder llamar glutdestroywindow(window);
-			*/
+			players.toFile("COMPARTIDO/boxscore.txt");	//guardamos los jugadores antes de salir
+			estado = SALIR;		//desde el mainglut se lee este estado y se cierra la ventana
 		}
 	}
 }
+
+//	ACCIONES DEL TECLADO
+//Se incluyen tambien los cambios de estado que producen
 
 void Gestor::press(unsigned char key) {
 	if ((key == 'p' || key == 'P') && estado == JUEGO)
@@ -243,8 +252,9 @@ void Gestor::press(unsigned char key) {
 	else if ((key == 'p' || key == 'P') && estado == PAUSA) {
 		estado = JUEGO;
 		ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
-	} //key 27 = escape
+	} 
 
+	//key 27 = escape
 	else if (key == 27 && (estado == PAUSA || estado == GAMEOVER)) {
 		estado = INICIO;
 		ETSIDI::playMusica("COMPARTIDO/sonidos/fondo.mp3", true);
@@ -253,9 +263,11 @@ void Gestor::press(unsigned char key) {
 		estado = INICIO;
 
 	else if (estado == JUEGO)
-		mundo.teclado.press(key);
-	else if (estado == GAMEOVER) {
+		mundo.teclado.press(key);	//durante juego mundo se ocupa de las teclas, si no son las anteriores
+
+	else if (estado == GAMEOVER) {	//escritura del nombre del jugador y guardado
 		char aux_key = key;
+
 		if (key == 8) { //BackSlash(
 			if (actual_player.Name.size() > 0)
 				actual_player.Name.pop_back();
@@ -276,6 +288,9 @@ void Gestor::unpress(unsigned char key) {
 	if (estado == JUEGO)
 		mundo.teclado.unpress(key);
 }
+
+
+// VARÍA LA DIFICULTAD EN FUNCIÓN DE LOS PUNTOS
 
 void Gestor::Dificultad() {
 	if (AuxPuntos < actual_player.Puntos) {

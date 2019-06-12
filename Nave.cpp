@@ -23,18 +23,15 @@ void Nave::Dibuja() {
 	glutSolidSphere(radio, 10, 10);
 	glRotatef(90, 0, 1, 0); //primera rotación (para que se vea apropiadamente)
 	glRotatef(point * 180 / PI, -1, 0, 0); //segunda rotación (adonde apunta) //OJO º / rad
-	glutSolidCone(1.2, 5, 10, 10);
+	//glutSolidCone(1.2, 5, 10, 10);
+	gluCylinder(gluNewQuadric(), 1.2f, 0.7f, 3.8f, 10, 10); //mira aver si te gusta mas siendo un cilindro
 
 	glPopMatrix();
 }
 
 void Nave::Dispara(lista<Disparo> &dis, unsigned char r, unsigned char g, unsigned char b) {
-	dis.push_back(new Disparo()); //crea un disparo al final
-	dis.back()->SetColor(r, g, b);//color muy bonito :)
-
-	//pedir dibujo si no se entiende jeje
-	//se puede usar a partir de aquí, indistintamente, la función fromArgMod(...) y rotar(...)
-	//se usan las dos como ejemplo
+	dis.push_back(new Disparo());	//crea un disparo al final
+	dis.back()->SetColor(r, g, b);	//color 
 	dis.back()->SetPos(pos + Vector2D().fromArgMod(point, radio));
 	dis.back()->SetVel(vel*0.2 + Vector2D().fromArgMod(point, dis.back()->GetV_Nominal()));
 

@@ -12,5 +12,3 @@ public:
 	Vector2D GetLim1() { return lim1; }
 	Vector2D GetLim2() { return lim2; }
 };
-
-//Mecagüentusmuertos

@@ -7,7 +7,6 @@ Disparo_acelerado::Disparo_acelerado() {
 	SetRadio(4);
 }
 
-
 void Disparo_acelerado::Dibuja() {
 	glPushMatrix();
 	glColor3ub(207, 16, 32);

@@ -9,4 +9,3 @@ void Disparo::Dibuja() {
 	glPopMatrix();
 
 }
-

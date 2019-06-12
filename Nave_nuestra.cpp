@@ -4,12 +4,7 @@
 
 
 Nave_nuestra::Nave_nuestra() :Nave(GV::HP_Inicial, GV::V_Nave) {
-
-	//Si por cualquier casual la nave de repente se volviera blanca, es porque este constructor ha
-	//dejado de funcionar, cambiar todo lo de dentro por un solo SetColor(255, 215, 0);
 	SetColor(255, 215, 0);
-	//
-
 }
 
 void Nave_nuestra::Tecla(Teclado &t) {
@@ -42,7 +37,5 @@ void Nave_nuestra::Tecla(Teclado &t) {
 		vel.fromArgMod(-PI / 2, V_Nominal);
 	}
 	else vel = Vector2D(0, 0);
-
-
 }
 

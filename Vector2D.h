@@ -21,7 +21,7 @@ public:
 	Vector2D operator - (Vector2D v2);
 	Vector2D operator * (float f);
 	Vector2D operator / (float c);
-	float operator % (Vector2D v2); //operador distancia jeje
+	float operator % (Vector2D v2); //operador distancia 
 
 	bool operator == (Vector2D v2);
 	bool operator != (Vector2D v2);

@@ -1,9 +1,6 @@
 #pragma once
 #include <vector>
 
-//Simplemente es la clase vector<...> de siempre, pero con otro nombre, referida a punteros y
-//con alguna función más, aparte de la sobrecarga ¿polimórfica? de erase o [ ]
-
 template <class T> class lista : public std::vector<T*> {
 public:
 	void Dibuja();
@@ -15,7 +12,7 @@ public:
 
 template <class T> void lista<T>::Dibuja() {
 	for (int i = 0; i < this->size(); i++)
-		this->operator[](i).Dibuja();//lista[i].Dibuja(); //no sé por qué funciona
+		this->operator[](i).Dibuja();		//lista[i].Dibuja(); 
 }
 
 template <class T> void lista<T>::Mueve(float t) {
@@ -30,7 +27,7 @@ template <class T> void lista<T>::erase(unsigned int pos) {
 }
 
 template <class T> T& lista<T>::operator [](int pos) {
-	return *this->vector::operator[] (pos); //no te retorna el puntero, sino lo de dentor del puntero
+	return *this->vector::operator[] (pos); //no te retorna el puntero, sino lo de dentro del puntero
 }
 
 template <class T> void lista<T>::Vaciar() {

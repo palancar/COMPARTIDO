@@ -5,10 +5,6 @@
 #include "Nave_mala.h"
 
 
-//-------------------------------------------------------------------------//
-//lo he llamado Choque.h para que no sea otra vez interacción y tal...-----//
-//-------------------------------------------------------------------------//
-
 class Choque {
 public:
 	static bool dentro(Vector2D pos, Borde& b); //dentro del mapa
@@ -22,10 +18,12 @@ public:
 
 	/*CHOQUES DE LISTAS*/
 
-	static void choque_lista(lista<Disparo>& ld, Borde& b); //los disparos no salen del mapa
+	static void choque_lista(lista<Disparo>& ld, Borde& b);		 //los disparos no salen del mapa
 	static void choque_lista(lista<Asteroide>& la, float radio); //choque con el radio exterior de destrucción
 	static void choque_lista(lista<Disparo>& ld, lista<Asteroide>& la); //choque entre disparos y asteroides
+
 	//En los choques se pueden producir bonus, por lo que es necesario incluirlos como argumento
+
 	static void choque_lista(lista<Disparo>& ld, lista<Asteroide>& la, long int &puntos, lista<Vida>& lv); //choque entre disparos y asteroides con puntuación (nuestros disparos)
 	static void choque_lista(lista<Asteroide>& la, Nave& n); //choque de la nave con los asteroides
 	static void rebote_lista(lista<Asteroide>& la);//choque de los asteroides entre sí
@@ -34,8 +32,10 @@ public:
 	static void rebote_lista(lista<Nave_mala>& ln); //rebotes entre naves 
 	static void rebote_lista(lista<Nave_mala>& ln, Nave& n); //rebote de las naves enemigas con nosotros
 	static bool choque_lista(lista<Disparo>& ld, Nave& n); //choque entre disparos y nave
-	static void choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, long int &puntos, float &x, float &y, bool &explosion, lista<Vida>& lv); //a las naves les llega un disparo y puntuación
-	static void choque_lista(lista<Vida>& lv, Nave& n); //al coger los bonus
+	
+	//se almacenan en x e y la posicion de la nave destruida si la hubiera, explosion es true si se ha destruido una nave durante la ejecución
+	static void choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, long int &puntos, float &x, float &y, bool &explosion, lista<Vida>& lv); 
+	static void choque_lista(lista<Vida>& lv, Nave& n); //al coger los bonus																	
 };
 
 typedef Choque CQ;

@@ -14,9 +14,6 @@ bool Choque::dentro(Vector2D pos, Borde& b) {
 }
 
 
-
-
-
 bool Choque::dentro(Vector2D pos, float radio) {
 	pos.x -= 40; //para centrarlo
 	pos.y -= 30;
@@ -226,7 +223,7 @@ bool Choque::choque_lista(lista<Disparo>& ld, Nave& n) {
 	for (int i = 0; i < ld.size(); i++) {
 		if (choque(ld[i], n)) {
 			ld.erase(i); 
-			n.operator--(); //le resta 1 vida a la nave //no sé por qué no funciona solo n--
+			n.operator--(); //le resta 1 vida a la nave 
 			ETSIDI::play("COMPARTIDO/sonidos/golpealenemigo.wav");
 			return true;
 		}

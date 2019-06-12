@@ -24,9 +24,7 @@ float GV::V_Nave_elite = 5;
 float GV::HP_Nave_elite = 10;
 float GV::V_Disparo_elite = 30.0;
 float GV::T_Disparo_Nave_elite = 0.9;
-
-
-float GV::T_Ciclo_Nave_Legendaria = 190.5; //la nave legendaria aparece tras 3 minutos???
+float GV::T_Ciclo_Nave_Legendaria = 180; //la nave legendaria aparece tras 3 minutos
 int GV::HP_Nave_legendaria = 80;
 float GV::T_Disparo_Nave_Legendaria = 3.0;
 
@@ -68,7 +66,6 @@ int main(int argc, char* argv[]) {
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown); //al pulsar una tecla
-	glutSpecialFunc(OnSpecialKeyboardDown); //gestion de los cursores 
 	glutMouseFunc(OnMouseClick); //al pulsar el ratón
 	glutPassiveMotionFunc(OnMouseMove); //al MOVER el ratón
 	glutKeyboardUpFunc(OnRelease); //al dejar de pulsar la tecla
@@ -102,22 +99,14 @@ void OnDraw(void)
 void OnTimer(int value)
 {
 	static float aux=0;
-	//poner aqui el código de animacion
+
 	gestor.Mueve(0.025);
 	gestor.Tecla();
 	gestor.Dificultad();
-	if (gestor.Salir()) {			//cerramos la ventana del juego
-		glutDestroyWindow(glutGetWindow());
-		return;
-	}
 
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);
 	glutPostRedisplay();
-}
-
-void OnSpecialKeyboardDown(int key, int x, int y) {
-	
 }
 
 void OnMouseClick(int b, int state, int x, int y) {
@@ -148,6 +137,8 @@ void OnRelease(unsigned char key, int x, int y) {
 
 
 void OnIdle() {
+	if (gestor.Salir())
+		glutDestroyWindow(glutGetWindow());
 
 	glutPostRedisplay();
 }

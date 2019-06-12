@@ -10,11 +10,9 @@
 #include "glut.h"
 
 
-Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60), time1(0), time2(0), time3(0),sprite("COMPARTIDO/imagenes/exploc.png",4,4,50){
-	//sprite.setCenter(-1, 1);
-	sprite.setPos(2000, 60);
-	//sprite.setSize(0.5, 0.5);
-
+Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60), 
+time1(0), time2(0), time3(0),sprite("COMPARTIDO/imagenes/exploc.png",4,4,50){
+	sprite.setPos(2000, 60);//en caso de que se genere una primera explosion esta no se verá
 }
 
 void Mundo::Dibuja()
@@ -58,7 +56,7 @@ void Mundo::Dibuja()
 
 void Mundo::Mueve(float t)
 {
-	nave.PointTo((nave.GetXYpoint() - nave.GetPos()).argumento());//la nave apunta a donde debe)
+	nave.PointTo((nave.GetXYpoint() - nave.GetPos()).argumento());//la nave apunta a donde debe
 	
 	
 	//CREACIÓN DE OBJETOS	
@@ -69,11 +67,11 @@ void Mundo::Mueve(float t)
 	LG::Naves_disparan(naves_enemigas, disparo_bad, t);
 	LG::Naves_apuntan(naves_enemigas, nave);
 
-	//
+	// 
 	sprite.loop();
 	if (sprite.getState() == 15)
-		sprite.setState(15, true);
-
+		sprite.setState(15, true);//el sprite se pone en pause despues de la primera ejecución
+									//se mantiene así hasta que se vuelve a activar con flanco de subida en explosión
 	//cosas se mueven
 	nave.Mueve(t);
 	naves_enemigas.Mueve(t);
@@ -105,7 +103,7 @@ void Mundo::Interacciones(float t) {
 	//COSAS NUEVAS//
 	CQ::rebote_lista(naves_enemigas, nave);
 	
-	if (explo) {
+	if (explo) {	//si hay flanco de subida en explosión activamos el sprite en la pos correspondiente
 		CallSprite(x, y);
 		explo = 0;
 	}
@@ -127,14 +125,9 @@ void Mundo::Inicializa()
 	time1 = 0;
 	time2 = 0;
 	ResetPuntos();
-
-	///QUITAR ESTO
-	//naves_enemigas.push_back(new Nave_legendaria()); 
-	//naves_enemigas.back()->SetPos(60, 50);
-
 }
 
-void Mundo::Tecla() {//CAMBIAR ESTO PLZ
+void Mundo::Tecla() {
 	nave.Tecla(teclado);
 }
 
@@ -150,4 +143,3 @@ void Mundo::MouseClick(int b, int state) {
 		ETSIDI::play("COMPARTIDO/sonidos/disparo1.mp3");
 	}
 }
-

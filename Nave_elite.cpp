@@ -36,11 +36,7 @@ void Nave_elite::Dibuja() {
 
 void Nave_elite::Dispara(lista<Disparo> &dis, unsigned char r, unsigned char g, unsigned char b) {
 	dis.push_back(new Disparo_elite()); //crea un disparo al final
-	dis.back()->SetColor(r, g, b);//color muy bonito :)
-
-	//pedir dibujo si no se entiende jeje
-	//se puede usar a partir de aquí, indistintamente, la función fromArgMod(...) y rotar(...)
-	//se usan las dos como ejemplo
+	dis.back()->SetColor(r, g, b);//color muy bonito 
 	dis.back()->SetPos(pos + Vector2D().fromArgMod(point, radio));
 	dis.back()->SetVel(Vector2D().fromArgMod(point, dis.back()->GetV_Nominal()));
 

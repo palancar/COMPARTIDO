@@ -33,7 +33,7 @@ void Vida::Dibuja() {
 }
 
 void Vida::Mueve(float t) {
-	//la vida no se mueve jeje, pero cambia de color
+	//la vida no se mueve, pero cambia de color
 
 	//RED
 	if (pulso[0])
