@@ -94,6 +94,7 @@ bool Choque::rebote(Objeto &o1, Objeto &o2) {
 	return true;
 }
 
+
 /*CHOQUES DE LISTAS*/
 
 void Choque::choque_lista(lista<Disparo>& ld, Borde& b) {
@@ -210,7 +211,7 @@ void Choque::rebote_lista(lista<Nave_mala>& ln) {
 	}
 }
 
-void Choque::rebote_lista(lista<Nave_mala>& ln, Nave& n) {
+ void Choque::rebote_lista (lista<Nave_mala>& ln, Nave_nuestra& n) {
 	for (int i = 0; i < ln.size(); i++) {
 		if (rebote(ln[i], n)) {
 			ln[i].GoTo(ETSIDI::lanzaDado(0.0, 80.0), ETSIDI::lanzaDado(0.0, 60.0));

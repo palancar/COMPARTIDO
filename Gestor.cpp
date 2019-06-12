@@ -4,18 +4,20 @@ using namespace std;
 
 bool valid_char(char& key) {
 	if (key >= '0' && key <= '9') return true;
-	if (key >= 'A' && key <= 'Z') return true;
-	if (key >= 'a' && key <= 'z') { 
+	else if (key >= 'A' && key <= 'Z') return true;
+	else if (key >= 'a' && key <= 'z') { 
 		key += 'A' - 'a'; //lo pasa a mayúsculas
 		return true;
 	}
-	if (key == '_' || key == '-') return true;
+	else if (key = ' ') return true; //se cambia luego a '@' al imprimirlo; 
+	else if (key == '_' || key == '-') return true;
+	return true;
 	return false;
 }
 
 Gestor::Gestor() {
 	estado = INICIO;
-	mundo.Inicializa();
+	Inicializa();
 	players.fromFile("COMPARTIDO/boxscore.txt");
 }
 
@@ -229,7 +231,7 @@ void Gestor::MouseClick(int b, int state) {
 
 	else if(b == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {		//hacer click en las opciones te lleva a las distintos menus
 		if (estado == OPCION1) {
-			mundo.Inicializa();
+			Inicializa();
 			estado = JUEGO;
 		}
 		else if (estado == OPCION2)
@@ -279,7 +281,7 @@ void Gestor::press(unsigned char key) {
 			players.toFile("COMPARTIDO/boxscore.txt");
 			estado = INICIO;
 		}
-		else if (valid_char(aux_key)&& actual_player.Name.size()<12) //comprueba si es válida la tecla introducida y la pasa a mayúsculas si es necesario
+		else if (valid_char(aux_key) && actual_player.Name.size()<12) //comprueba si es válida la tecla introducida y la pasa a mayúsculas si es necesario
 			actual_player.Name.push_back(aux_key);
 	}
 }
@@ -294,27 +296,35 @@ void Gestor::unpress(unsigned char key) {
 
 void Gestor::Dificultad() {
 	if (AuxPuntos < actual_player.Puntos) {
-		if (GV::T_Disparo_NaveEnemiga > 0.5)
-			GV::T_Disparo_NaveEnemiga -= 0.1;
-		if (GV::T_Ciclo_Nave > 4)
-			GV::T_Ciclo_Nave -= 0.9;
+		
+		if (GV::T_Disparo_NaveEnemiga > 0.95)
+			GV::T_Disparo_NaveEnemiga -= 0.05;
+		if (GV::T_Ciclo_Nave > 6)
+			GV::T_Ciclo_Nave -= 0.5;
 		if (GV::V_Nave_Mala < 12)
 			GV::V_Nave_Mala += 0.2;
 		if (GV::V_Asteroides < 20)
-			GV::V_Asteroides += 1.0;
-		if (GV::T_Ciclo_Nave_elite > 10)
+			GV::V_Asteroides += 0.5;
+		if (GV::T_Ciclo_Nave_elite > 11)
 			GV::T_Ciclo_Nave_elite-= 1.0;
-		AuxPuntos += 1500;
+		GV::HP_Nave_legendaria += 1;
+		AuxPuntos += 4000;
+		
 	}
+	cout << GV::T_Disparo_NaveEnemiga << " ";
 }
 
-void Gestor::Inicializa(){
-	estado = INICIO;
+void Gestor::Inicializa() {
+	
 	mundo.Inicializa();
 	vidas = mundo.GetHP();
 	HP = mundo.GetHP();
-	AuxPuntos = 2000;	//puntos a partir de los cuales empieza asubir la dificultad
-	players.fromFile("COMPARTIDO/boxscore.txt");
+	GV::T_Disparo_NaveEnemiga = 1.5;
+	GV::T_Ciclo_Nave = 12.2;
+	GV::V_Nave_Mala = 9.0;
+	GV::V_Asteroides = 15.0;
+	GV::T_Ciclo_Nave_elite = 28.3;
+	AuxPuntos = 4000;	//puntos a partir de los cuales empieza a subir la dificultad
 }
 
 void Gestor::DibujaFondo() {

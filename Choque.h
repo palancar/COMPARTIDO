@@ -3,8 +3,9 @@
 #include "Vida.h"
 #include "MiMundo.h"
 #include "Nave_mala.h"
-
-
+//--------------------------------------------//
+//--Choque es el nombre de las interacciones--//
+//--------------------------------------------//
 class Choque {
 public:
 	static bool dentro(Vector2D pos, Borde& b); //dentro del mapa
@@ -15,7 +16,7 @@ public:
 	static bool choque(Objeto& ob1, Objeto& ob2); //dos objetos cualesquiera chocan
 	static bool rebote(Nave& n, Borde& b); //la nave no puede salir del mapa
 	static bool rebote(Objeto &o1, Objeto &o2); //rebote inelástico de objetos
-
+	
 	/*CHOQUES DE LISTAS*/
 
 	static void choque_lista(lista<Disparo>& ld, Borde& b);		 //los disparos no salen del mapa
@@ -30,7 +31,7 @@ public:
 	static void rebote_lista(lista<Nave_mala>& ln, Borde& b); //choque de naves con el borde
 	static void rebote_lista(lista<Nave_mala>& ln, lista<Asteroide>& la); //las naves rebotan con los asteroides
 	static void rebote_lista(lista<Nave_mala>& ln); //rebotes entre naves 
-	static void rebote_lista(lista<Nave_mala>& ln, Nave& n); //rebote de las naves enemigas con nosotros
+	static void rebote_lista (lista<Nave_mala>& ln, Nave_nuestra& n); //rebote de las naves enemigas con nosotros
 	static bool choque_lista(lista<Disparo>& ld, Nave& n); //choque entre disparos y nave
 	
 	//se almacenan en x e y la posicion de la nave destruida si la hubiera, explosion es true si se ha destruido una nave durante la ejecución

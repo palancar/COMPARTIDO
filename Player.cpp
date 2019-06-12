@@ -28,6 +28,7 @@ void ListaPlayer::ordenar() {
 }
 
 void ListaPlayer::toFile(string file) {
+	voltear(' ', '@');
 	ofstream fs;
 	fs.open(file, ios::out);
 	if (fs.fail()) {
@@ -43,6 +44,7 @@ void ListaPlayer::toFile(string file) {
 		fs << at(i).Puntos << " " << at(i).Name << endl;
 	}
 	fs.close();
+	voltear('@', ' ');
 }
 
 void ListaPlayer::fromFile(string file) {
@@ -59,4 +61,14 @@ void ListaPlayer::fromFile(string file) {
 		agregar(jugador);
 	}
 	fs.close();
+	voltear('@', ' ');
+}
+
+void ListaPlayer::voltear(char viejo, char nuevo) {
+	for (int i = 0; i < size(); i++) {
+		for (int j = 0; j < at(i).Name.size(); j++) {
+			if (at(i).Name[j] == viejo)
+				at(i).Name[j] = nuevo;
+		}
+	}
 }
