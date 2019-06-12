@@ -23,6 +23,11 @@ class Mundo{
 	float time1;//necesarios por ciertos motivos relacionados con la generación de naves
 	float time2;
 	float time3;
+	float x, y;
+	bool explo;
+	ETSIDI::SpriteSequence sprite;
+
+
 public:
 	Mundo();
 	~Mundo() { ; }
@@ -39,8 +44,11 @@ public:
 	int GetHP() { return nave.GetHP(); }
 	void ResetPuntos() { Puntos = 0; }
 	int GetPuntos() { return Puntos; }
+	void CallSprite(float x, float y) {  sprite.setState(0, false); sprite.setPos(x, y);
+	}
+	
 
-
+	//const char *texturePath = "COMPARTIDO/imagenes/explo.png", int 4, 4, 1000, true, ln[i].pos.x, ln[i].pos.y, 3.0F, 3.0F, 1
 	Borde borde;
 	Nave_nuestra nave;
 	lista<Disparo> disparo_good;

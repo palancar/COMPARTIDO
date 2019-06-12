@@ -1,10 +1,10 @@
 #pragma once
 
-
 //VARIABLES / CONSTANTES GLOBALES (se definen por vez primera en el MainGlut)
 class GlobalVar {
 public:
-	static float Distancia;//distancia del ojo
+
+	static float Distancia;  //distancia del ojo
 	static float R_Generacion;
 	static float R_Destruccion;
 
@@ -34,6 +34,4 @@ public:
 	static float T_Disparo_Nave_elite;
 	
 };
-
-
 typedef GlobalVar GV;

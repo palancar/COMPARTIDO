@@ -27,7 +27,7 @@ float GV::T_Disparo_Nave_elite = 0.9;
 
 
 float GV::T_Ciclo_Nave_Legendaria = 190.5; //la nave legendaria aparece tras 3 minutos???
-int GV::HP_Nave_legendaria = 100;
+int GV::HP_Nave_legendaria = 80;
 float GV::T_Disparo_Nave_Legendaria = 3.0;
 
 
@@ -91,28 +91,6 @@ void OnDraw(void)
 	//Para definir el punto de vista
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
-	/*---PRIMITIVAS DE DIBUJO---
-	glutWireSphere( radius,  slices,  stacks);
-	glutSolidSphere(radius,  slices,  stacks);
-	glutWireCone( base,  height,  slices,  stacks);
-	glutSolidCone( base,  height,  slices,  stacks);
-	glutWireCube( size);
-	glutSolidCube( size);
-	glutWireTorus( innerRadius,  outerRadius,  sides,  rings);
-	glutSolidTorus( innerRadius,  outerRadius,  sides,  rings);
-	glutWireDodecahedron();
-	glutSolidDodecahedron();
-	glutWireTeapot( size);
-	glutSolidTeapot( size);
-	glutWireOctahedron();
-	glutSolidOctahedron();
-	glutWireTetrahedron();
-	glutSolidTetrahedron();
-	glutWireIcosahedron();
-	glutSolidIcosahedron();
-	*/
-
 	gestor.Dibuja();
 	
 	//no borrar esta linea ni poner nada despues
@@ -128,8 +106,10 @@ void OnTimer(int value)
 	gestor.Mueve(0.025);
 	gestor.Tecla();
 	gestor.Dificultad();
-	if (gestor.Salir())			//cerramos la ventana del juego
+	if (gestor.Salir()) {			//cerramos la ventana del juego
 		glutDestroyWindow(glutGetWindow());
+		return;
+	}
 
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);

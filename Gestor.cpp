@@ -26,7 +26,7 @@ Gestor::Gestor() {
 void Gestor::Dibuja() {
 
 	if (estado == INICIO||estado==OPCION1 || estado == OPCION2 || estado == OPCION3 || estado == OPCION4) {
-
+		ETSIDI::SpriteSequence("COMPARTIDO/imagenes/explo.png", 4, 4, 1000, true, 10, 20, 3.0F, 3.0F, 1);
 		DibujaFondo();
 		//
 		if (estado == OPCION1) { //dibuja cuadraditos de seleccion
@@ -279,11 +279,16 @@ void Gestor::unpress(unsigned char key) {
 
 void Gestor::Dificultad() {
 	if (AuxPuntos < actual_player.Puntos) {
-		GV::T_Disparo_NaveEnemiga -= 0.1;
-		GV::T_Ciclo_Nave -= 0.9;
-		GV::V_Nave_Mala += 0.2;
-		GV::T_Disparo_Nave_elite -= 0.1;
-		GV::V_Asteroides -= 1.0;
+		if (GV::T_Disparo_NaveEnemiga > 0.5)
+			GV::T_Disparo_NaveEnemiga -= 0.1;
+		if (GV::T_Ciclo_Nave > 4)
+			GV::T_Ciclo_Nave -= 0.9;
+		if (GV::V_Nave_Mala < 12)
+			GV::V_Nave_Mala += 0.2;
+		if (GV::V_Asteroides < 20)
+			GV::V_Asteroides += 1.0;
+		if (GV::T_Ciclo_Nave_elite > 10)
+			GV::T_Ciclo_Nave_elite-= 1.0;
 		AuxPuntos += 1500;
 	}
 }
@@ -292,6 +297,7 @@ void Gestor::Inicializa(){
 	estado = INICIO;
 	mundo.Inicializa();
 	vidas = mundo.GetHP();
+	HP = mundo.GetHP();
 	AuxPuntos = 2000;	//puntos a partir de los cuales empieza asubir la dificultad
 	players.fromFile("COMPARTIDO/boxscore.txt");
 }

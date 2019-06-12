@@ -10,8 +10,11 @@
 #include "glut.h"
 
 
-Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60), time1(0), time2(0), time3(0){
-	;
+Mundo::Mundo() : ojo{ 40, 30, GV::Distancia }, mira{ 40, 30, 0 }, borde(0, 0, 80, 60), time1(0), time2(0), time3(0),sprite("COMPARTIDO/imagenes/exploc.png",4,4,50){
+	//sprite.setCenter(-1, 1);
+	sprite.setPos(2000, 60);
+	//sprite.setSize(0.5, 0.5);
+
 }
 
 void Mundo::Dibuja()
@@ -49,6 +52,8 @@ void Mundo::Dibuja()
 	asteroids.Dibuja();
 	vidaBonus.Dibuja();
 
+	sprite.draw();
+
 }
 
 void Mundo::Mueve(float t)
@@ -63,6 +68,11 @@ void Mundo::Mueve(float t)
 	LG::Crear_naves(naves_enemigas, t, GV::T_Ciclo_Nave_Legendaria, new Nave_legendaria(), time3);
 	LG::Naves_disparan(naves_enemigas, disparo_bad, t);
 	LG::Naves_apuntan(naves_enemigas, nave);
+
+	//
+	sprite.loop();
+	if (sprite.getState() == 15)
+		sprite.setState(15, true);
 
 	//cosas se mueven
 	nave.Mueve(t);
@@ -87,13 +97,19 @@ void Mundo::Interacciones(float t) {
 	CQ::rebote_lista(asteroids);
 	CQ::rebote_lista(naves_enemigas, borde);
 	CQ::rebote_lista(naves_enemigas, asteroids);
-	CQ::choque_lista(disparo_good, naves_enemigas,Puntos, vidaBonus); //se suman tambien los puntos
+	CQ::choque_lista(disparo_good, naves_enemigas,Puntos,x,y,explo, vidaBonus); //se suman tambien los puntos
 	CQ::rebote_lista(naves_enemigas);
 	CQ::choque_lista(disparo_bad, nave);
 	CQ::choque_lista(vidaBonus, nave);
 
 	//COSAS NUEVAS//
 	CQ::rebote_lista(naves_enemigas, nave);
+	
+	if (explo) {
+		CallSprite(x, y);
+		explo = 0;
+	}
+
 }
 
 void Mundo::Inicializa()
@@ -113,7 +129,7 @@ void Mundo::Inicializa()
 	ResetPuntos();
 
 	///QUITAR ESTO
-	naves_enemigas.push_back(new Nave_legendaria()); 
+	//naves_enemigas.push_back(new Nave_legendaria()); 
 	//naves_enemigas.back()->SetPos(60, 50);
 
 }

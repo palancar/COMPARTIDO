@@ -215,15 +215,17 @@ void Choque::rebote_lista(lista<Nave_mala>& ln) {
 
 void Choque::rebote_lista(lista<Nave_mala>& ln, Nave& n) {
 	for (int i = 0; i < ln.size(); i++) {
-		if (rebote(ln[i], n))
+		if (rebote(ln[i], n)) {
 			ln[i].GoTo(ETSIDI::lanzaDado(0.0, 80.0), ETSIDI::lanzaDado(0.0, 60.0));
+			n.operator--();
+		}
 	}
 }
 
 bool Choque::choque_lista(lista<Disparo>& ld, Nave& n) {
 	for (int i = 0; i < ld.size(); i++) {
 		if (choque(ld[i], n)) {
-			ld.erase(i);
+			ld.erase(i); 
 			n.operator--(); //le resta 1 vida a la nave //no sé por qué no funciona solo n--
 			ETSIDI::play("COMPARTIDO/sonidos/golpealenemigo.wav");
 			return true;
@@ -232,7 +234,8 @@ bool Choque::choque_lista(lista<Disparo>& ld, Nave& n) {
 	return false;
 }
 
-void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, long int &puntos, lista<Vida>& lv) {
+void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, long int &puntos, float &x,float &y,bool &explosion,lista<Vida>& lv) {
+	explosion = 0;
 	for (int i = 0; i < ln.size(); i++) {
 		if (choque_lista(ld, ln[i])) {
 			if (ln[i].GetHP() <= 0) {
@@ -241,10 +244,11 @@ void Choque::choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, long int &pu
 					lv.push_back(new Vida());
 					lv.back()->SetPos((ln[i].GetPos()));
 				}
+				x = ln[i].pos.x;
+				y = ln[i].pos.y;
+				explosion = 1;
 				ln.erase(i);
 				ETSIDI::play("COMPARTIDO/sonidos/ExploNave.wav");
-				
-
 				break;
 			}
 		}

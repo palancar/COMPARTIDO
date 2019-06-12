@@ -34,7 +34,7 @@ public:
 	static void rebote_lista(lista<Nave_mala>& ln); //rebotes entre naves 
 	static void rebote_lista(lista<Nave_mala>& ln, Nave& n); //rebote de las naves enemigas con nosotros
 	static bool choque_lista(lista<Disparo>& ld, Nave& n); //choque entre disparos y nave
-	static void choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, long int &puntos, lista<Vida>& lv); //a las naves les llega un disparo y puntuación
+	static void choque_lista(lista<Disparo>& ld, lista<Nave_mala>& ln, long int &puntos, float &x, float &y, bool &explosion, lista<Vida>& lv); //a las naves les llega un disparo y puntuación
 	static void choque_lista(lista<Vida>& lv, Nave& n); //al coger los bonus
 };
 
