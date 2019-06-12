@@ -119,11 +119,11 @@ void Mundo::Inicializa()
 	vidaBonus.Vaciar();
 
 	teclado.inicializa();
-
 	nave.SetPos(40, 30);
 	nave.SetHP(GV::HP_Inicial);
 	time1 = 0;
 	time2 = 0;
+	time3 = 0;
 	ResetPuntos();
 }
 
